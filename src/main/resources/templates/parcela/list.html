@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head id="teste1">
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<section class="layout-content" layout:fragment="corpo">
+
+    <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <i class="oi oi-caret-right"></i>
+                    <span>Lista de Parcelas</span>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+    <div class="card">
+        <div class="card-body">
+            <!--<script src="bootstrap.bundle.min.js / bootstrap.bundle.js"></script>-->
+            <div class="container-table" id="listagem">
+                <!--exibe mensagem-->
+                <div class="alert  alert-success"
+                     th:if="${!#strings.isEmpty(mensagem)}">
+                    <i class="fa fa-check-circle"></i>
+                    <span th:text="${mensagem}">Mensagem de sucesso!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="tblListaParcelas" class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                        <tr class="bg-light degrade" align="center">
+                            <th>Cliente</th>
+                            <th>Seguro</th>
+                            <th>Vencimento</th>
+                            <th>N Parcela</th>
+                            <!--<th>Status</th>-->
+
+                            <th>Pago</th>
+                            <th sec:authorize="hasRole('ADMIN')">Ações</th>
+                            <th sec:authorize="hasRole('USER')">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="v : ${parcelas}" align="center">
+                            <td th:text="${v.seguro.usuario.nome}"></td>
+                            <td th:text="${v.seguro.tipoSeguro.descricao}"></td>
+                            <td th:text="${#temporals.format(v.dataVencimento, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${v.tamanho}"></td>
+
+                            <td th:text="${#temporals.format(v.dataPago, 'dd/MM/yyyy')}"></td>
+                            <td>
+                                <label th:text="${v.status}" class="stt"></label>
+                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/parcelas/{id} (id=${v.id})}" name="edit" id="parcelasP"
+                                   class="btn btn-danger btn-sm btnEditarParcela" title="Pagar">
+                                    <span class="oi oi-check" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <!--<tr class="bg-light text-center degrade">-->
+                        <!--<td colspan="1"></td>-->
+                        <!--<td colspan="4" class="pagination-div" style="padding-top: 15px">-->
+                        <!--<div class="row justify-content-center">-->
+                        <!--<nav aria-label="Page navigation example">-->
+                        <!--<ul class="pagination justify-content-center">-->
+                        <!--<span th:if="${parcelas.hasPrevious()}">-->
+                        <!--<li class="page-item">-->
+                        <!--<a class="page-link"-->
+                        <!--th:href="@{/parcelas(page=${parcelas.number-1},size=${parcelas.size})}">Anterior</a>-->
+                        <!--</li>-->
+                        <!--</span>-->
+                        <!--<th:block th:each="i : ${#numbers.sequence(0, parcelas.totalPages - 1)}">-->
+                        <!--<span th:if="${parcelas.number == i}" class="selected">-->
+                        <!--<li class="page-item active">-->
+                        <!--<a class="page-link">[[${i}+1]]</a>-->
+                        <!--</li>-->
+                        <!--</span>-->
+                        <!--<span th:unless="${parcelas.number == i}">-->
+                        <!--<li class="page-item">-->
+                        <!--<a class="page-link"-->
+                        <!--th:href="@{/parcelas(page=${i},size=${parcelas.size})}">[[${i}+1]]</a>-->
+                        <!--</li>-->
+                        <!--</span>-->
+                        <!--</th:block>-->
+                        <!--<span th:if="${parcelas.hasNext()}">-->
+                        <!--<li class="page-item">-->
+                        <!--<a class="page-link"-->
+                        <!--th:href="@{/parcelas(page=${parcelas.number+1},size=${parcelas.size})}">Proximo</a>-->
+                        <!--</li>-->
+                        <!--</span>-->
+                        <!--</ul>-->
+                        <!--</nav>-->
+                        <!--<div class="dropdown " style="padding-left: 30px">-->
+                        <!--<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"-->
+                        <!--id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"-->
+                        <!--aria-expanded="false">-->
+                        <!--Itens por página:-->
+                        <!--</a>-->
+                        <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+                        <!--<a class="dropdown-item" th:href="@{/parcelas(page=${0},size=${5})}">5</a>-->
+                        <!--<a class="dropdown-item" th:href="@{/parcelas(page=${0},size=${10})}">10</a>-->
+                        <!--<a class="dropdown-item" th:href="@{/parcelas(page=${0},size=${20})}">20</a>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--<td colspan="1"></td>-->
+                        <!--</tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div th:replace="fragments/modalVeiculo :: modalVeiculo"></div>-->
+
+    <!-- Modal -->
+
+    <script>
+        window.onload = function teste() {
+            // var iframe = document.getElementById("teste1");
+            // $(iframe).contentWindow.document.getElementById("sidebar").hidden;
+            $("#sidebar").hide();
+            $(".navbar").hide();
+            $(".layout-footer").hide();
+            $(".card-header").hide();
+            $(".card").width(600);
+            // elm.style.display = "none";
+
+            var tblPar = document.getElementById('tblListaParcelas');
+
+            for (var i = 1; i < tblPar.rows.length; i++) {
+                for (var j = 0; j < tblPar.rows[i].cells.length; j++) {
+                    // console.log("r - "+i+" c - "+j)
+                    // console.log(tblPar.rows[i].cells[j])
+                    if (j == 5) {
+                        var stat = (tblPar.rows[i].cells[5]).getElementsByClassName('stt')[0].innerText;
+                        console.log(stat)
+                        var bt = (tblPar.rows[i].cells[5]).getElementsByClassName('btnEditarParcela')[0];
+                        if (stat == "pago") {
+                            bt.style.backgroundColor = '#28a745';
+                            bt.style.borderColor = '#28a745';
+                            // bt.style.backgroundColor = '#dc3545';
+                            // bt.style.borderColor = '#dc3545';
+                        }
+
+                    }
+                }
+            }
+        }
+
+    </script>
+    <style>
+        #listagem {
+            padding-bottom: 0px;
+        }
+
+        .card-body {
+            padding: 5px 5px 5px 5px;
+        }
+
+        .layout-main {
+            background-color: white;
+            width: 650px;
+            height: 300px;
+        }
+    </style>
+</section>
+</body>
+</html>

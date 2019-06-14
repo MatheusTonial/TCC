@@ -1,0 +1,15 @@
+
+
+.btnNovo{
+    margin-bottom: 1%;
+}
+
+.card{
+    width: 98%;
+    /*border-radius:0;*/
+    margin: 2% auto 2% auto;
+}
+
+li{
+   border-radius: 0;
+}

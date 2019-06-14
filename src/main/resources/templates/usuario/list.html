@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<section class="layout-content" layout:fragment="corpo">
+
+    <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <i class="oi oi-caret-right"></i>
+                    <span>Lista de Usuarios</span>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+    <div class="card">
+        <div class="card-body">
+
+            <div class="container-table" id="listagem">
+
+                <!--<div class="row">-->
+                <!--<div class="col">-->
+                <!--<nav class="navbar navbar-light bg-light justify-content-end">-->
+                <!--<div class="accordion form-row" id="accordionExample">-->
+                <!--<div class="card bg-light border-light">-->
+                <!--<div class="collapse" id="colBairro" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/bairro}">-->
+                <!--<label class="mr-sm-2">Bairro </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="bairro"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colCpf" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/cpf}">-->
+                <!--<label class="mr-sm-2">CPF </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="cpf"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colEmail" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/email}">-->
+                <!--<label class="mr-sm-2">Email </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="cpf"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colNome" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/nome}">-->
+                <!--<label class="mr-sm-2">Nome </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="nome"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colRg" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/rg}">-->
+                <!--<label class="mr-sm-2">RG </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="rg"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colRua" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/rua}">-->
+                <!--<label class="mr-sm-2">Rua </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="rua"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colTelefone" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/telefone}">-->
+                <!--<label class="mr-sm-2">Telefone </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="telefone"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colTipo" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/tipo}">-->
+                <!--<label class="mr-sm-2">Tipo </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="tipo"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--<div class="collapse" id="colCidade" data-parent="#accordionExample">-->
+                <!--<form class="form-inline" method="GET" th:action="@{/usuarios/buscar/cidade}">-->
+                <!--<label class="mr-sm-2">Cidade </label>-->
+                <!--<div class="input-group input-group-sm">-->
+                <!--<input autofocus class="form-control mr-sm-2" type="text"-->
+                <!--aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+                <!--th:name="cidade"/>-->
+                <!--</div>-->
+                <!--<button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar-->
+                <!--</button>-->
+                <!--</form>-->
+                <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div class="dropdown mr-sm-2 col">-->
+                <!--<button class="btn btn-secondary btn-sm dropdown-toggle" type="button"-->
+                <!--id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"-->
+                <!--aria-expanded="false">-->
+                <!--Filtrar por...-->
+                <!--</button>-->
+                <!--<div class="dropdown-menu  border-light bg-light " aria-labelledby="dropdownMenu2">-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colNome" aria-controls="colNome">Nome-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colEmail" aria-controls="colEmail">Email-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colCpf" aria-controls="colCpf">CPF-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colRg" aria-controls="colRg">RG-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colBairro" aria-controls="colBairro">Bairro-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colRua" aria-controls="colRua">Rua-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colTelefone" aria-controls="colTelefone">Telefone-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colTipo" aria-controls="colTipo">Tipo-->
+                <!--</button>-->
+                <!--<button class="dropdown-item card bg-light border-light" type="button"-->
+                <!--data-toggle="collapse"-->
+                <!--data-target="#colCidade" aria-controls="colCidade">Cidade-->
+                <!--</button>-->
+                <!--&lt;!&ndash;<button class="dropdown-item card bg-light border-light" type="button">Mostrar Todos</button>&ndash;&gt;-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <!--<a class="btn btn-outline-danger btn-sm" href="/usuarios/listar" role="button">-->
+                <!--<span title="Cadastro" aria-hidden="true"></span>-->
+                <!--<span>Listar Todos</span>-->
+                <!--</a>-->
+
+                <!--</div>-->
+                <!--</nav>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <!--<div th:replace="fragments/alert"></div>-->
+
+                <!--Botão Novo-->
+                <div style="padding-bottom: 10px">
+                    <button type="button" class="btn btn-info btnNovoUsuario" name="new">
+                        <span class="oi oi-plus"></span> Novo
+                    </button>
+                    <br/>
+
+                </div>
+
+
+                <!--exibe mensagem-->
+                <div class="alert  alert-success"
+                     th:if="${!#strings.isEmpty(mensagem)}">
+                    <i class="fa fa-check-circle"></i>
+                    <span th:text="${mensagem}">Mensagem de sucesso!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div class="table-responsive">
+                    <table id="tblListaUsuario" class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                        <tr class="bg-light degrade" align="center">
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>End.</th>
+                            <th>CPF</th>
+                            <th>RG</th>
+                            <th>Tipo</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="u : ${usuarios}" align="center">
+                            <td th:text="${u.nome}"></td>
+                            <td th:text="${u.email}"></td>
+                            <td th:text="${u.telefone}"></td>
+                            <td>
+
+                                <button type="button" class="btn btn-secondary btn-sm" data-container="body"
+                                        data-toggle="popover" data-placement="left"
+                                        th:attr="data-content=${#strings.concat(
+		                                    	u.rua, ', ',
+		                                    	u.numero, ' - ',
+		                                    	u.bairro, ', ',
+		                                    	u.cidade.nome, ' - ',
+		                                    	u.cidade.estado.sigla
+		                                    )}">
+                                    <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                            <td th:text="${u.cpf}"></td>
+                            <td th:text="${u.rg}"></td>
+                            <td th:text="${u.tipo}"></td>
+                            <td>
+                                <a th:href="@{/usuarios/{id} (id=${u.id})}" name="edit"
+                                   class="btn btn-info btn-sm btnEditarUsuario">
+                                    <span class="oi oi-pencil" title="Editar" aria-hidden="true"></span>
+                                </a>
+                                <button class="btn btn-danger btn-sm" name="delete"
+                                        data-toggle="modal" data-target="#confirmRemove"
+                                        th:attr="data-id=${u.id}, data-name=${u.nome}">
+                                    <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+                                </button>
+
+                            </td>
+                        </tr>
+                        <tr class="bg-light text-center degrade">
+                            <td colspan="1"></td>
+                            <td colspan="6" class="pagination-div" style="padding-top: 15px">
+                                <div class="row justify-content-center">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                        <span th:if="${usuarios.hasPrevious()}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{/usuarios(page=${usuarios.number-1},size=${usuarios.size})}">Anterior</a>
+                                            </li>
+                                        </span>
+                                            <th:block th:each="i : ${#numbers.sequence(0, usuarios.totalPages - 1)}">
+                                            <span th:if="${usuarios.number == i}" class="selected">
+                                                <li class="page-item active">
+                                                    <a class="page-link">[[${i}+1]]</a>
+                                                </li>
+                                            </span>
+                                                <span th:unless="${usuarios.number == i}">
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                       th:href="@{/usuarios(page=${i},size=${usuarios.size})}">[[${i}+1]]</a>
+                                                </li>
+                                            </span>
+                                            </th:block>
+                                            <span th:if="${usuarios.hasNext()}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{/usuarios(page=${usuarios.number+1},size=${usuarios.size})}">Próximo</a>
+                                            </li>
+                                        </span>
+                                        </ul>
+                                    </nav>
+                                    <div class="dropdown " style="padding-left: 30px">
+                                        <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+                                           id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            Itens por página:
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" th:href="@{/usuarios(page=${0},size=${5})}">5</a>
+                                            <a class="dropdown-item" th:href="@{/usuarios(page=${0},size=${10})}">10</a>
+                                            <a class="dropdown-item" th:href="@{/usuarios(page=${0},size=${20})}">20</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="1"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div th:replace="fragments/modalUsuario :: modalUsuario"></div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <!--<script src="jquery.chained.js"></script>-->
+    <!--teste-->
+    <!--<script>-->
+    <!--$('[data-toggle="popover"]').popover({-->
+    <!--trigger: 'focus'-->
+    <!--})-->
+    <!--</script>-->
+    <!--Fim script-->
+    <!--Modal-->
+    <div class="myform">
+        <div class="modal fade" id="modalNewEditUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" style="width: 555px">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formNewEdit" name="formNewEdit"
+                              th:object="${usuario}" th:action="@{/usuarios/salvar}">
+                            <input type="hidden" id="id" th:field="*{id}"/>
+
+                            <div class="form-group row">
+                                <label for="nome" class="col-sm-2" align="center">Nome</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="nome" autofocus="autofocus"
+                                           th:field="*{nome}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-2" align="center">E-mail</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="email" autofocus="autofocus"
+                                           th:field="*{email}"
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+
+                                    <div class="invalid-feedback">
+                                        <span th:errors="*{email}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="senha" class="col-sm-2" align="center">Senha</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="senha" autofocus="autofocus"
+                                           th:field="*{senha}"
+                                           th:classappend="${#fields.hasErrors('senha')} ? 'is-invalid'"/>
+
+                                    <div class="invalid-feedback">
+                                        <span th:errors="*{senha}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="margin-left: 10px; margin-right: -40px;">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <label for="cpf" class="col-md-2" align="center">CPF</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control col-md-10" id="cpf"
+                                                   autofocus="autofocus" data-mask="000.000.000-00"
+                                                   th:field="*{cpf}"
+                                                   th:classappend="${#fields.hasErrors('cpf')} ? 'is-invalid'"
+                                                   style="margin-left: 27px;"/>
+                                            <div class="invalid-feedback">
+                                                <span th:errors="*{cpf}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <label for="rg" class="col-md-2" align="center">RG</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control col-md-10" id="rg"
+                                                   autofocus="autofocus"
+                                                   data-mask="00.000.000-0"
+                                                   th:field="*{rg}"
+                                                   th:classappend="${#fields.hasErrors('rg')} ? 'is-invalid'"/>
+
+                                            <div class="invalid-feedback">
+                                                <span th:errors="*{rg}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="margin-left: 7px; margin-right: -27px">
+                                <div class="form-group col-md-8" style="">
+                                    <div class="row">
+                                        <label for="rua" class="col-md-2" th:align="center">Rua</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control col-md-10" id="rua"
+                                                   autofocus="autofocus"
+                                                   th:field="*{rua}"
+                                                   th:classappend="${#fields.hasErrors('rua')} ? 'is-invalid'"
+                                                   style="margin-left: 16px;"/>
+                                            <div class="invalid-feedback">
+                                                <span th:errors="*{rua}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class="row">
+                                        <label for="numero" class="col-md-2" th:align="center">N.º</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control col-md-10" id="numero"
+                                                   autofocus="autofocus"
+                                                   th:field="*{numero}"
+                                                   th:classappend="${#fields.hasErrors('numero')} ? 'is-invalid'"/>
+
+                                            <div class="invalid-feedback">
+                                                <span th:errors="*{numero}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="bairro" class="col-sm-2" th:align="center">Bairro</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="bairro" autofocus="autofocus"
+                                           th:field="*{bairro}"
+                                           th:classappend="${#fields.hasErrors('bairro')} ? 'is-invalid'"/>
+
+                                    <div class="invalid-feedback">
+                                        <span th:errors="*{bairro}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="telefone" class="col-sm-2" th:align="center">Telefone</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="telefone" autofocus="autofocus"
+                                           data-mask="(00)00000-0000"
+                                           th:field="*{telefone}"
+                                           th:classappend="${#fields.hasErrors('telefone')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback">
+                                        <span th:errors="*{telefone}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="margin-left: 1px">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <label for="estado" class="col-md-2" th:align="center">Estado</label>
+                                        <div class="col">
+                                            <select id="estado" class="form-control col-md-10" th:field="*{cidade.estado.id}" style="margin-left: 39px">
+                                                <option value="">Selecione</option>
+                                                <option th:each="e : ${estados}" th:value="${e.id}" th:text="${e.nome}"></option>
+                                            </select>
+                                            <!--<label th:each="${cidades}" id="listaCidade" hidden></label>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <label for="cidade" id="lblCidade" class="col-md-2" th:align="center">Cidade</label>
+                                        <div class="col">
+                                            <select id="cidade" class="form-control col-md-10" th:field="*{cidade.id}" style="margin-left: 34px" hidden>
+                                                <!--<option value="" >Selecione</option>-->
+                                                <option th:each="c : ${cidades}" th:value="${c.id}" th:text="${c.nome}" th:name="${c.estado.id}" ></option>
+                                            </select>
+                                            <select id="tblCidade" class="form-control col-md-10" th:field="*{cidade.id}" style="margin-left: 34px" disabled>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="tipo" class="col-md-2" th:align="center">Tipo de Usuário</label>
+                                <div class="col-md-10">
+                                    <select id="tipo" class="form-control" th:field="*{tipo}"
+                                            th:classappend="${#fields.hasErrors('tipo')} ? 'is-invalid'" required
+                                            oninvalid="this.setCustomValidity('Selecione um tipo de usuario!')"
+                                            oninput="setCustomValidity('')">
+                                        <option value="">Selecione...</option>
+                                        <option th:value="Cliente">Cliente</option>
+                                        <option th:value="Corretor">Corretor</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="oi oi-check"></span> Salvar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    <span class="oi oi-x"></span> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fim Modal-->
+</section>
+</body>
+</html>

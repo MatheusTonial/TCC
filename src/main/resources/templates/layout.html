@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <link href="/css/modal.css" rel="stylesheet"/>
+    <link href="/css/table.css" rel="stylesheet"/>
+    <link href="/css/sideicone.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="layout-main">
+    <aside>
+        <div class="wrapper" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="row row-offcanvas row-offcanvas-left"
+                 th:replace="fragments/sidebar :: nav-sidebar">
+                <span>menu</span>
+            </div>
+        </div>
+    </aside>
+    <div class="container-fluid ">
+        <header th:replace="fragments/header :: cabecalho">
+            <div>header</div>
+        </header>
+        <section layout:fragment="corpo">
+            <div>conteudo</div>
+        </section>
+    </div>
+    <footer th:replace="fragments/footer :: rodape">
+        <div>footer</div>
+    </footer>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/additional-methods.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/localization/messages_pt_BR.js}"></script>
+<script th:src="@{/js/delete.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditMarca.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditVeiculo.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditUsuario.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditEstado.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditCidade.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditEmail.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditSeguro.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditTipoSeguro.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalIndex.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.navbar-toggle').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+<script>
+    // sidebar dropdown
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+</body>
+</html>

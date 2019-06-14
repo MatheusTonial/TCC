@@ -1,0 +1,87 @@
+<!--https://bootstrapious.com/p/bootstrap-sidebar-->
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar-dark bg-dark navegacao" id="sidebar" th:fragment="nav-sidebar">
+        <ul class=" list-unstyled components">
+            <li class="active">
+                <a class="list-group-item menu-brand text-menu sidebar-header" style="border-radius: 0px"
+                   th:href="@{/}">
+                    <i class="oi oi-aperture"> </i>
+                    <h5> Sistema Corretora</h5>
+                </a>
+            </li>
+
+            <li>
+                <button id="btn1" style="border-radius: 0px"
+                        class="list-group-item list-group-item-action bg-dark text-menu dropdown-btn">
+                    <i class="fa fa-file-text"></i> Relatórios <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-container">
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/relatorio/seguro}">Seguros a Vencer</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/relatorio/cliente}">Seguro do Cliente</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/relatorio/parcela}">Parcelas a Vencer</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/relatorio/vencidas}">Parcelas Vencidas</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/relatorio/tipo}">Tipo de Seguro</a>
+                </div>
+            </li>
+            <li>
+                <button id="btn2" style="border-radius: 0px"
+                        class="list-group-item list-group-item-action bg-dark text-menu dropdown-btn">
+                    <i class="fa fa-lock"></i> Seguros<i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-container">
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/seguros}">Todos os Seguros</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/seguros/abertos}">Seguros a Pagar</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu"
+                       th:href="@{/seguros/pagos}">Seguros Pagos</a>
+                </div>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/tipo_Seguros}">
+                    <i class="fa fa-book"></i> Tipo Seguro
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action bg-dark text-menu " th:href="@{/veiculos}">
+                    <i class="fa fa-automobile"></i> Veículos
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action bg-dark text-menu " th:href="@{/marcas}">
+                    <i class="fa fa-bookmark"></i> Marcas
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/usuarios}">
+                    <i class="fa fa-user"></i> Usuários
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/cidades}">
+                    <i class="fa fa-map-marker"></i> Cidades
+                </a>
+            </li>
+            <li>
+                <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/estados}">
+                    <i class="fa fa-globe"></i> Estados
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

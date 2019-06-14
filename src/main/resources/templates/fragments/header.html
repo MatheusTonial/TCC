@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8 ">
+</head>
+<body>
+<header th:fragment="cabecalho">
+    <nav class="navbar navbar-dark menu-barra">
+        <div class="navbar-header">
+            <button type="button" class="btn menu-barra text-white navbar-toggle "
+                    id="sidebarCollapse" sec:authorize="hasRole('ADMIN')">
+                <i class="oi oi-menu"></i>
+            </button>
+        </div>
+        <div class="navbar-header">
+            <div class="dropdown">
+                <button type="button" class="btn menu-barra text-white dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user-circle"></i>
+                    <span th:text="${#httpServletRequest.userPrincipal.principal.username}"></span>
+                </button>
+                <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item bg-dark text-white" href="/"><i class="fa fa-home"></i> Home</a>
+                    <a class="dropdown-item bg-dark text-white" href="/logout"><i class="fa fa-sign-out"></i>Sair</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--layout:decorate="~{layout}"-->
+<head>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <!-- Custom styles for this template -->
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body id="LoginForm" class="bg-dark">
+<!--<section class="layout-content" layout:fragment="corpo">-->
+<form th:action="@{/login}" method="POST">
+    <div class="container">
+
+            <h1 class="form-heading" align="center" style="font-size: 50px; padding-top: 40px; padding-bottom: 15px; text-shadow: 1px 2px #070707"> Corretora de Seguros</h1>
+        <br/>
+        <div class="login-form">
+            <div class="main-div">
+                <div class="panel">
+                    <h2> Login</h2>
+                    <!--<p>Faça o login para continuar.</p>-->
+                </div>
+                <br/>
+                <div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="E-mail" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Senha"
+                               name="password">
+                    </div>
+                    <br/>
+                    <!--<div class="forgot">-->
+                        <!--<a href="/">Esqueceu a senha?</a>-->
+                    <!--</div>-->
+                    <button type="submit" class="btn btn-lg btn-block btn-primary">Login</button>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!--</section>-->
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout4"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<section class="layout-content " layout:fragment="corpo">
+    <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <i class="oi oi-caret-right"></i>
+                    <span>Home</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" sec:authorize="hasRole('ADMIN')">
+        <!--<div>-->
+            <div class="row" style="margin-bottom: -9px">
+                <div class="col-xl-4 mb-3">
+                    <div class="card bg-light">
+                        <div class="card-body d-flex align-items-center espaco">
+                            <img th:src="@{/img/iconeseguro2.png}" class="esquerda">
+                            <div class="d-flex flex-column align-items-center direita">
+                                <div id="tbSeguro0" class="numeroQtde" style="color: #0e267a">--</div>
+                                <div class="d-flex text-dark ">
+                                    <div>Seguros efetivados</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="card-footer text-center" th:href="@{/relatorio/seguro}"
+                           style="height: 44px; padding-top: 9px">
+                            <span id="tbSeguro1" class="numeroTotal" style="color: #0e267a">R$ xx,xx</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-4 mb-3">
+                    <div class="card bg-light">
+                        <div class="card-body d-flex align-items-center espaco">
+                            <img th:src="@{/img/recebidos2.png}" class="esquerda">
+                            <div class="d-flex flex-column align-items-center direita">
+                                <div id="tbParcelaP0" class="numeroQtde" style="color: #278421">--</div>
+                                <div class="d-flex text-dark ">
+                                    <div> Parcelas pagas</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="card-footer text-center" th:href="@{/relatorio/parcela}"
+                           style="height: 44px; padding-top: 9px">
+                            <span id="tbParcelaP1" class="numeroTotal" style="color: #278421">R$ xx,xx</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-4 mb-3">
+                    <div class="card bg-light">
+                        <div class="card-body d-flex align-items-center espaco">
+                            <img th:src="@{/img/pagar2.png}" class="esquerda">
+                            <div class="d-flex flex-column align-items-center direita">
+                                <div id="tbParcelaV0" class="numeroQtde" style="color: #ed1c23">--</div>
+                                <div class="d-flex text-dark">
+                                    <div> Parcelas a pagar</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="card-footer text-center" th:href="@{/relatorio/parcela}"
+                           style="height: 44px; padding-top: 9px">
+                            <span id="tbParcelaV1" class="numeroTotal" style="color: #ed1c23">R$ xx,xx</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <!--</div>-->
+        <script>
+            window.onload = function () {
+                tabelas()
+            }
+
+            function tabelas() {
+                var tb = [[${tbSeguro}]];
+                var s = "";
+                if (tb[0] < 10) {
+                    s = "0";
+                }
+                document.getElementById("tbSeguro0").innerText = s + tb[0];
+                document.getElementById("tbSeguro1").innerText = "R$ " + tb[1].toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+
+                var tbPp = [[${tbParcelaP}]];
+                var p = "";
+                if (tbPp[0] < 10) {
+                    p = "0";
+                }
+                document.getElementById("tbParcelaP0").innerText = p + tbPp[0];
+                document.getElementById("tbParcelaP1").innerText = "R$ " + tbPp[1].toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+
+                var tbPv = [[${tbParcelaV}]];
+                var v = "";
+                if (tbPv[0] < 10) {
+                    v = "0";
+                }
+                document.getElementById("tbParcelaV0").innerText = v + tbPv[0];
+                document.getElementById("tbParcelaV1").innerText = "R$ " + tbPv[1].toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            }
+        </script>
+        <br/>
+        <div class="container row" >
+            <div id="barra" ></div>
+            <div id="pizza" ></div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script th:inline="javascript">
+            $(function () {
+                Highcharts.chart('barra', {
+                    chart: {
+                        type: 'bar',
+                        backgroundColor: null
+                    },
+                    title: {
+                        text: 'Total de Seguros no Ultimo Ano'
+                    },
+                    subtitle: {
+                        text: 'Quantidade de Seguros Efetivados no Ultimo Ano'
+                    },
+                    xAxis: {
+                        categories: [[${graficoMes.keySet()}]],
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 10,
+                        title: {
+                            text: 'Numero de Seguros'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name} </td>' +
+                            '<td>: </td>' +
+                            ' <td style="padding:0"><b> {point.y:.0f}</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name: 'Quantidade ',
+                        data: [[${graficoMes.values()}]],
+                        color: '#1aa054'
+                    }
+                    ]
+                });
+            });
+        </script>
+        <script th:inline="javascript">
+            Highcharts.chart('pizza', {
+                chart: {
+                    type: 'pie',
+                    backgroundColor: null,
+                    options3d: {
+                        enabled: true,
+                        alpha: 40,
+                        beta: 0
+                    }
+                },
+                title: {
+                    text: 'Tipos de Seguro Efetivados(%)'
+                },
+                subtitle: {
+                    text: 'Percentual Relativo aos Tipos de Seguro Efetuados'
+                },
+                tooltip: {
+                    formatter: function () {
+                        var sliceIndex = this.point.index;
+                        var sliceName = this.series.chart.axes[0].categories[sliceIndex];
+                        return '<b>' + sliceName + ': ' + '</b> <b>' + this.y + '%' + '</b>';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        showInLegend: true,
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function () {
+                                var sliceIndex = this.point.index;
+                                var sliceName = this.series.chart.axes[0].categories[sliceIndex];
+                                return '<b>' + sliceName + ' : ' + '</b> <b>' + this.y + '%' + '</b>';
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    enabled: true,
+                    labelFormatter: function () {
+                        var legendIndex = this.index;
+                        var legendName = this.series.chart.axes[0].categories[legendIndex];
+                        return legendName;
+                    }
+                },
+                xAxis: {
+                    categories: [[${graficoPizzaNome.values()}]]
+                },
+                series: [{
+                    type: 'pie',
+                    data: [[${graficoPizza.values()}]],
+                    innerSize: '42%'
+                }]
+            });
+        </script>
+    </div>
+    <!--AREA CLIENTE-->
+    <div class="container" sec:authorize="hasRole('USER')">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tblListaSeguro" class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                        <tr class="bg-light degrade" align="center">
+                            <th>Cliente</th>
+                            <th>E-mail</th>
+                            <th>Tipo Seguro</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Parcelas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="s : ${seguros}" align="center">
+                            <td th:text="${s.id}" class="idSeguro" hidden></td>
+                            <td th:text="${s.usuario.nome}"></td>
+                            <td th:text="${s.usuario.email}"></td>
+                            <td th:text="${s.tipoSeguro.descricao}"></td>
+                            <td th:text="${#temporals.format(s.dataSeg, 'dd/MM/yyyy')}" class="dataSeguro"></td>
+                            <td th:text=" 'R$ ' + ${s.valor}"></td>
+                            <td>
+                                <label th:text="${s.nParcelas}" class="mr-sm-2"></label>
+                                <a class="btn btn-success btn-sm btnTabelaCli" name="parcelas"
+                                   th:href="@{/parcelas/seguro/{id} (id=${s.id})}"
+                                   target="myIframeCli" title="Ver Parcelas" data-toggle="tooltip">
+                                    <span class="oi oi-clipboard" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tabelaParcelas">
+                    <div class="modal fade" id="tblParcelasCli" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Parcelas do Seguro</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <iframe name="myIframeCli" id="myIframeCli" frameborder="0" scrolling="no"
+                                                src=""
+                                                style="width: 635px; height: 265px; border: none; margin: 0 auto; display: block;">
+                                            relatorio...
+                                        </iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript"
+                        src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+                <script>
+                </script>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<section class="layout-content" layout:fragment="corpo">
+    <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <i class="oi oi-caret-right"></i>
+                    <span>Lista de Seguros</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="card">
+        <div class="card-body">
+            <div class="container-table" id="listagem">
+                <div>
+                    <div>
+                        <nav class="navbar navbar-light bg-white">
+                            <div class="row">
+                                <button type="button" class="btn btn-info btnNovoSeguro mr-sm-1" name="new"><span
+                                        class="oi oi-plus"></span> Novo
+                                </button>
+                                <div class="dropdown">
+                                    <a class="btn btn-outline-info dropdown-toggle mr-sm-1" href="#" role="button"
+                                       id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        <span class="fa fa-envelope"></span> Personalizar Notificações
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                        <a class="dropdown-item btnEmail" th:href="@{/seguros/email/1}"
+                                           name="notificacao">Notificação de Seguro</a>
+                                        <a class="dropdown-item btnEmail" th:href="@{/seguros/email/2}"
+                                           name="notificacao">Notificação de Parcela</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion form-row" id="accordionExample">
+                                <div class="card bg-white border-white form-group col">
+                                    <div class="collapse" id="colUsuario" data-parent="#accordionExample">
+                                        <form class="form-inline" method="GET" th:action="@{/seguros/buscar/usuario}">
+                                            <label class="mr-sm-2">Cliente </label>
+                                            <div class="input-group input-group-sm">
+                                                <input autofocus class="form-control mr-sm-2" type="text"
+                                                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                       th:name="nome"/>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-success ">Procurar</button>
+                                        </form>
+                                    </div>
+                                    <div class="collapse" id="colTipo" data-parent="#accordionExample">
+                                        <form class="form-inline" method="GET" th:action="@{/seguros/buscar/tipo}">
+                                            <label class="mr-sm-2">Tipo de Seguro </label>
+                                            <div class="input-group input-group-sm">
+                                                <input autofocus class="form-control mr-sm-2" type="text"
+                                                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                       th:name="nome"/>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="collapse" id="colData" data-parent="#accordionExample">
+                                        <form class="form-inline" method="GET" th:action="@{/seguros/buscar/data}">
+                                            <label class="mr-sm-2">Data </label>
+                                            <div class="input-group input-group-sm">
+                                                <input autofocus class="form-control mr-sm-2" type="text"
+                                                       data-mask="00/00/0000"
+                                                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                       th:name="dataSeg"/>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-success my-2 my-sm-0">Procurar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="dropdown mr-sm-2 form-group">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        Filtrar por...
+                                    </button>
+                                    <div class="dropdown-menu  border-light bg-light " aria-labelledby="dropdownMenu2">
+                                        <button class="dropdown-item card bg-light border-light" type="button"
+                                                data-toggle="collapse"
+                                                data-target="#colUsuario" aria-controls="colUsuario">Cliente
+                                        </button>
+                                        <button class="dropdown-item card bg-light border-light" type="button"
+                                                data-toggle="collapse"
+                                                data-target="#colTipo" aria-controls="colTipo">Tipo de Seguro
+                                        </button>
+                                        <button class="dropdown-item card bg-light border-light" type="button"
+                                                data-toggle="collapse"
+                                                data-target="#colData" aria-controls="colData">Data
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <a class="btn btn-outline-danger btn-sm" href="/seguros" role="button">
+                                        <span title="Cadastro" aria-hidden="true"></span>
+                                        <span>Listar Todos</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="alert  alert-success"
+                     th:if="${!#strings.isEmpty(mensagem)}">
+                    <i class="fa fa-check-circle"></i>
+                    <span th:text="${mensagem}">Mensagem de sucesso!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="tblListaSeguro" class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                        <tr class="bg-light degrade" align="center">
+                            <th>Cliente</th>
+                            <th>E-mail</th>
+                            <th>Tipo Seguro</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Parcelas</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="s : ${seguros}" align="center">
+                            <td th:text="${s.id}" class="idSeguro" hidden></td>
+                            <td th:text="${s.usuario.nome}"></td>
+                            <td th:text="${s.usuario.email}"></td>
+                            <td th:text="${s.tipoSeguro.descricao}"></td>
+                            <td th:text="${#temporals.format(s.dataSeg, 'dd/MM/yyyy')}" class="dataSeguro"></td>
+                            <td th:text=" 'R$ ' + ${s.valor}"></td>
+                            <td>
+                                <label th:text="${s.nParcelas}" class="mr-sm-2"></label>
+                                <a class="btn btn-success btn-sm btnTabela" name="parcelas"
+                                   th:href="@{/parcelas/seguro/{id} (id=${s.id})}"
+                                   target="myIframe" title="Ver Parcelas" data-toggle="tooltip">
+                                    <span class="oi oi-clipboard" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a th:href="@{/seguros/confirmar/{id} (id=${s.id})}" name="email"
+                                   class="btn btn-warning text-white btn-sm mr-sm-1 btnNotificacao"
+                                   title="Enviar notificação por e-mail" data-toggle="tooltip" id="teste123"
+                                   style="visibility: hidden">
+                                    <span class="fa fa-envelope" aria-hidden="true"></span>
+                                </a>
+                                <label th:text="${s.email.prazo1}" class="prazo1" hidden></label>
+                                <label th:text="${s.email.prazo2}" class="prazo2" hidden></label>
+                                <a th:href="@{/seguros/{id} (id=${s.id})}" name="edit"
+                                   class="btn btn-info btn-sm btnEditarSeguro mr-sm-1">
+                                    <span class="oi oi-pencil" title="Editar" aria-hidden="true"></span>
+                                </a>
+                                <input type="hidden" name="_method" value="DELETE"/>
+                                <button class="btn btn-danger btn-sm mr-sm-1" name="delete"
+                                        data-toggle="modal" data-target="#confirmRemove"
+                                        th:attr="data-id=${s.id}, data-name=${s.usuario.nome}">
+                                    <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="bg-light text-center degrade">
+                            <td colspan="1"></td>
+                            <td colspan="5" class="pagination-div" style="padding-top: 15px">
+                                <div class="row justify-content-center">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                        <span th:if="${seguros.hasPrevious()}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{/seguros(page=${seguros.number-1},size=${seguros.size})}">Anterior</a>
+                                            </li>
+                                        </span>
+                                            <th:block th:each="i : ${#numbers.sequence(0, seguros.totalPages - 1)}">
+                                            <span th:if="${seguros.number == i}" class="selected">
+                                                <li class="page-item active">
+                                                    <a class="page-link">[[${i}+1]]</a>
+                                                </li>
+                                            </span>
+                                                <span th:unless="${seguros.number == i}">
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                       th:href="@{/seguros(page=${i},size=${seguros.size})}">[[${i}+1]]</a>
+                                                </li>
+                                            </span>
+                                            </th:block>
+                                            <span th:if="${seguros.hasNext()}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{/seguros(page=${seguros.number+1},size=${seguros.size})}">Próximo</a>
+                                            </li>
+                                        </span>
+                                        </ul>
+                                    </nav>
+                                    <div class="dropdown " style="padding-left: 30px">
+                                        <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+                                           id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            Itens por página:
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" th:href="@{/seguros(page=${0},size=${5})}">5</a>
+                                            <a class="dropdown-item" th:href="@{/seguros(page=${0},size=${10})}">10</a>
+                                            <a class="dropdown-item" th:href="@{/seguros(page=${0},size=${20})}">20</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="1"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <label th:text="${listaParcelaSeg}" id="listagemParcela" hidden></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/modalSeguro :: modalSeguro"></div>
+    <div class="tabelaParcelas">
+        <div class="modal fade" id="tblParcelas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Parcelas do Seguro</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <iframe name="myIframe" id="myIframe" frameborder="0" scrolling="no" src=""
+                                    style="width: 635px; height: 265px; border: none; margin: 0 auto; display: block;">
+                                relatorio...
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="myform">
+        <div class="modal fade" id="modalNewEditSeguro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width: 500px">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formNewEdit" name="formNewEdit"
+                              th:object="${seguro}" th:action="@{/seguros/salvar}">
+                            <div class="form-group row">
+                                <label for="valor" class="col-md-4" align="center">Valor</label>
+                                <div class="col-md-8">
+                                    <input type="number" step="0.01" class="form-control" name="valor" id="valor"
+                                           autofocus="autofocus" th:field="*{valor}"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nParcelas" class="col-md-4" align="center">Nº de Parcelas</label>
+                                <div class="col-md-8">
+                                    <select id="nParcelas" name="nParcelas" class="form-control"
+                                            th:field="*{nParcelas}">
+                                        <option type="number" th:value="1">1</option>
+                                        <option type="number" th:value="2">2</option>
+                                        <option type="number" th:value="3">3</option>
+                                        <option type="number" th:value="4">4</option>
+                                    </select>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dataSeg" class="col-sm-4" th:align="center">Data</label>
+                                <div class="col-md-8">
+                                    <input type="text" maxlength="10" class="form-control" name="dataSeg" id="dataSeg"
+                                           data-mask="00/00/0000   "
+                                           th:value="${{#dates.format(dataSeg, 'dd/MM/yyyy')}}"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="usuario" class="col-sm-4" th:align="center">Usuário</label>
+                                <div class="col-md-8">
+                                    <select id="usuario" class="form-control required" name="usuario"
+                                            th:field="*{usuario.id}">
+                                        <option value="">Selecione</option>
+                                        <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nome}">dep
+                                        </option>
+                                    </select>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="tipoSeguro" class="col-md-4" th:align="center">Tipo de Seguro</label>
+                                <div class="col-md-8">
+                                    <select id="tipoSeguro" name="tipoSeguro" class="form-control required"
+                                            th:field="*{tipoSeguro.id}">
+                                        <option value="">Selecione</option>
+                                        <option th:each="t : ${tipo_seguros}" th:value="${t.id}"
+                                                th:text="${t.descricao}">dep
+                                        </option>
+                                    </select>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="visibility: hidden" id="divVeiculo">
+                                <label for="veiculo" class="col-md-4" th:align="center">Veiculo</label>
+                                <div class="col-sm-8">
+                                    <select id="veiculo" name="veiculo" class="form-control" th:field="*{veiculo.id}">
+                                        <option th:each="v : ${veiculos}"
+                                                th:value="${v.id}" th:text="${v.placa}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" id="id" th:field="*{id}"/>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="oi oi-check"></span> Salvar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    <span class="oi oi-x"></span> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Personalizar-->
+    <div class="myemail">
+        <div class="modal fade" id="modalNewEditEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formNewEditEmail" name="formNewEditEmail"
+                              th:action="@{/seguros/email/salvar}" th:object="${email}">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="titulo">Titulo</label>
+                                    <input type="text" class="form-control" id="titulo" name="titulo"
+                                           th:field="*{titulo}"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="texto">Texto</label>
+                                    <textarea rows="5" cols="25" class="form-control" name="texto" id="texto"
+                                              autofocus="autofocus"
+                                              th:field="*{texto}"></textarea>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-row" id="praz">
+                                <div class="form-group col-md-6">
+                                    <label for="prazo1">Primeiro Prazo</label>
+                                    <input type="text" class="form-control" id="prazo1" name="prazo1"
+                                           autofocus="autofocus"
+                                           th:field="*{prazo1}"
+                                           th:classappend="${#fields.hasErrors('prazo1')} ? 'is-invalid'"/>
+
+                                    <div class="invalid-feedback">
+                                        <span th:errors="*{prazo1}"></span>
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="prazo2">Segundo Prazo</label>
+                                    <input type="text" class="form-control" id="prazo2" name="prazo2"
+                                           autofocus="autofocus"
+                                           th:field="*{prazo2}"
+                                           th:classappend="${#fields.hasErrors('prazo2')} ? 'is-invalid'"/>
+
+                                    <div class="invalid-feedback">
+                                        <span th:errors="*{prazo2}"></span>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+                            <input type="hidden" id="id" th:field="*{id}"/>
+
+                            <div class="modal-footer" style="padding-bottom: 0px">
+                                <div class="form-group" style="margin-bottom: 0px; height: 90px">
+                                    <div id="lineLbl">
+                                        <div class="form-group col-md-12">
+                                            <label class="text-uppercase text-danger form-row"
+                                                   style="font-size: 12px">DATA -<span
+                                                    class="text-lowercase text-danger" style="font-size: 12px">
+                                             corresponde a data de vencimento</span></label>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="text-uppercase text-danger form-row"
+                                                   style="font-size: 12px">CLIENTE -<span
+                                                    class="text-lowercase text-danger" style="font-size: 12px"> corresponde
+                                                ao nome do cliente</span></label>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label class="text-uppercase text-danger form-row"
+                                                   style="font-size: 12px">TIPO -<span
+                                                    class="text-lowercase text-danger" style="font-size: 12px">
+                                                corresponde ao tipo de seguro</span></label>
+                                        </div>
+                                    </div>
+                                    <style>
+                                        #lineLbl label {
+                                            display: block
+                                        }
+                                    </style>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="padding-bottom: 0px">
+                                <div class="form-group" style="margin-bottom: 0px">
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="oi oi-check"></span> Salvar
+                                    </button>
+                                    <button type="button" class="btn btn-info" id="desfazer">
+                                        <span class="oi oi-action-undo"></span> Texto Padrão
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                        <span class="oi oi-x"></span> Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Email-->
+    <div class="enviarEmail">
+        <div class="modal fade" id="mandarEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width: 500px">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Notificação E-mail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" method="GET" id="teste" name="teste" th:action="@{/seguros/enviar}"
+                              th:object="${seguro}">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="endereco">E-mail</label>
+                                    <input type="text" class="form-control" id="endereco" name="endereco"
+                                           autofocus="autofocus" disabled
+                                           th:name="endereco"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="assunto">Assunto</label>
+                                    <input type="text" class="form-control" id="assunto" name="assunto" disabled
+                                           autofocus="autofocus"
+                                           th:name="assunto"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="texto">Texto</label>
+                                    <textarea rows="5" cols="25" class="form-control" name="texto" id="texto" disabled
+                                              autofocus="autofocus" th:name="texto"></textarea>
+                                    <br/>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control idEmail" id="id" name="id" hidden th:name="id"/>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary esconderBotao" id="escondeBotao"
+                                        th:name="escondeBotao">
+                                    <span class="oi oi-check"></span> Enviar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    <span class="oi oi-x"></span> Cancelar
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

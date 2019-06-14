@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<section class="layout-content" layout:fragment="corpo">
+
+    <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <i class="oi oi-caret-right"></i>
+                    <span>Relatório Tipos de Seguro</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="container-table" id="listagem">
+                <div class="alert  alert-success"
+                     th:if="${!#strings.isEmpty(mensagem)}">
+                    <i class="fa fa-check-circle"></i>
+                    <span th:text="${mensagem}">Mensagem de sucesso!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--<div th:replace="fragments/alert"></div>-->
+
+                <div class="card">
+                    <div class="card-header text-right">
+                        <nav class="navbar justify-content-end">
+                            <div class="form-row">
+                                <form class="form-inline" method="GET" th:action="@{/relatorio/tipo/seguro}"
+                                      th:object="${seguro}">
+                                    <label class="mb-2">Tipo de Seguro </label>
+                                    <div class="input-group mx-sm-3 mb-2">
+                                        <select id="tipoSeguro" name="tipoSeguro" class="form-control"
+                                                th:field="*{tipoSeguro}"/>
+                                        <!--<option value="">Selecione</option>-->
+                                        <option th:each="t : ${tipo_seguros}" th:value="${t.descricao}"
+                                                th:text="${t.descricao}" th:name="tipoSeguro">dep
+                                        </option>
+                                        </select>
+
+                                    </div>
+                                    <button class="btn btn-outline-dark mb-2 mr-2"
+                                            onclick="this.form.target='my_iframe'" th:name="botao" th:value="mostrar"><i
+                                            class="fa fa-file-text"></i> Gerar Relatório
+                                    </button>
+                                    <button class="btn btn-outline-dark mb-2 mr-2" th:name="botao" th:value="baixar"><i
+                                            class="fa fa-download"></i> Download
+                                    </button>
+                                </form>
+                                </form>
+                                <button class="btn btn-outline-dark mb-2 mr-2" data-toggle="modal"
+                                        data-target="#mandarEmail"><i class="fa fa-envelope"></i> Enviar e-mail
+                                </button>
+                            </div>
+                            <script>
+                                window.onload = function () {
+                                    $(document.getElementsByName("my_iframe")).height($(window).height());
+                                };
+                            </script>
+                        </nav>
+                    </div>
+                    <div class="card-body">
+                        <iframe name="my_iframe" style="width: 100%; border: none;" src="">relatorio...</iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mandarEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 500px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enviar Arquivo por E-mail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form" method="GET" th:action="@{/relatorio/tipo/email}" th:object="${seguro}">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="endereco">E-mail</label>
+                                <input type="email" class="form-control" id="endereco" name="endereco"
+                                       autofocus="autofocus"
+                                       th:name="endereco"/>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="assunto">Assunto</label>
+                                <input type="text" class="form-control" id="assunto" name="assunto"
+                                       autofocus="autofocus"
+                                       th:name="assunto"/>
+                                <br/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label> Tipo de Seguro</label>
+                                <select id="tipoSeguro" name="tipoSeguro" class="form-control"
+                                        th:field="*{tipoSeguro}"/>
+                                <!--<option value="">Selecione</option>-->
+                                <option th:each="t : ${tipo_seguros}" th:value="${t.descricao}"
+                                        th:text="${t.descricao}" th:name="tipoSeguro">dep
+                                </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="texto">Texto</label>
+                                <textarea rows="5" cols="25" class="form-control" name="texto" id="texto"
+                                          autofocus="autofocus" th:name="texto"></textarea>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary mandar" onclick="this.form.target='my_iframe'; teste1()">
+                                <span class="oi oi-check"></span> Enviar
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                <span class="oi oi-x"></span> Cancelar
+                            </button>
+                        </div>
+                    </form>
+                    <script>
+                        function teste1(){
+                            // console.log("funciao")
+                            $("#mandarEmail").modal('hide');
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,183 @@
+/*
+ * Base structure
+ */
+*{
+    font-family: arial;
+}
+html, body {
+    height: 100%;
+    background-color: #f9f9f9;
+}
+
+
+/*
+ * main layout
+ */
+.layout-main {
+    display: flex;
+    /*min-height: calc(100vh - 52px);*/
+    min-height: calc(100vh);
+    overflow: hidden;
+    position: relative;
+    min-height: 100%;
+}
+
+/*
+ * Content
+ */
+.layout-content {
+    width: 100%;
+    padding-top: 0px;
+}
+
+/*
+ * Footer
+ */
+
+.layout-footer {
+    position: absolute;
+    bottom: 0;
+    height:4%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #1a1a1a;
+}
+
+.footer-copy {
+    font-size: 92%;
+    display: block;
+    color: #525864;
+    text-align: center;
+}
+
+
+/*///   LOGIN   ////*/
+
+body#LoginForm{
+    background-color: #17859b;
+}
+
+.form-heading { color:#fff; font-size:23px;}
+.panel h2{ color:#444444; font-size:20px; margin:0 0 8px 0;}
+.panel p { color:#777777; font-size:14px; margin-bottom:30px; line-height:24px;}
+.login-form .form-control {
+    background: #f7f7f7 none repeat scroll 0 0;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 50px;
+    line-height: 50px;
+}
+.main-div {
+    background: #ffffff none repeat scroll 0 0;
+    border-radius: 5px;
+    margin: 10px auto 30px;
+    max-width: 38%;
+    padding: 50px 70px 70px 71px;
+    border: 1px solid #070707;
+}
+
+.login-form .form-group {
+    margin-bottom:10px;
+}
+.login-form{ text-align:center;}
+.forgot a {
+    color: #777777;
+    font-size: 14px;
+    text-decoration: underline;
+}
+.login-form  .btn.btn-primary {
+    /*background: #f0ad4e none repeat scroll 0 0;*/
+    /*border-color: #f0ad4e;*/
+    color: #ffffff;
+    font-size: 16px;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+}
+.forgot {
+    text-align: left; margin-bottom:30px;
+}
+.botto-text {
+    color: #ffffff;
+    font-size: 14px;
+    margin: auto;
+}
+.login-form .btn.btn-primary.reset {
+    background: #ff9900 none repeat scroll 0 0;
+}
+.back { text-align: left; margin-top:10px;}
+.back a {color: #444444; font-size: 13px;text-decoration: none;}
+
+.jrPage{
+    width: 100% !important;
+    border:solid 1px #000000;
+}
+
+#myIframe #myIframeCli{
+    width: 635px;
+    height: 265px;
+    border: none;
+    margin: 0 auto;
+    display: block;
+}
+
+.dashboard{
+    text-align: center;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-size: 20px;
+    bottom: 5%;
+}
+
+.esquerda{
+    width: 30%;
+}
+.direita{
+    width: 65%;
+}
+
+.numeroQtde{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+.numeroTotal{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.espaco{
+    padding: 2%;
+}
+/*.hidden { display: none; }*/
+
+.error {
+    color: red;
+    /*background-color: #acf;*/
+}
+
+#barra{
+    width: 50%;
+    height: 400px;
+    margin-left: 0px;
+}
+
+#pizza{
+    width: 50%;
+    height: 400px;
+}
+
+@media only screen and (max-width: 1000px){
+    body #barra{
+        width: 100%;
+    }
+    #pizza{
+        width: 100%;
+    }
+}

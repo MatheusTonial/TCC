@@ -1,0 +1,102 @@
+html, body {
+    height: 100%;
+}
+
+.text-menu {
+    color: #d9d9d9;
+}
+
+.menu-brand {
+    padding: 10px;
+    background-color: #1a1a1a;
+    width: 100%;
+    border: 2px solid #1a1a1a;
+}
+
+.menu-barra {
+    /*padding: 10px;*/
+    background-color: #1a1a1a;
+    border: 1px solid #1a1a1a;
+    /*width: 100%;*/
+}
+
+.bg-navbar {
+    background-color: #f50f00;
+    /*border-bottom: solid 1px #d9d9d9;*/
+
+}
+
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-content: stretch;
+    justify-content: stretch;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*padding-bottom: 18px;*/
+}
+
+aside .wrapper {
+    height: 100%;
+}
+
+#sidebar {
+    width: 210px;
+    height: 100%;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.sidebar-header i {
+    padding-right: 5px;
+}
+
+#sidebar.active {
+    min-width: 100px;
+    max-width: 100px;
+    text-align: center;
+}
+
+/* alterando o contepudo da barra lateral. Ocultar cabeçalho e exibir cabeçalho pequeno*/
+
+#sidebar.active .sidebar-header h5 {
+    display: none;
+}
+
+#sidebar ul li a {
+    text-align: left;
+}
+
+#sidebar.active ul li a {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+#sidebar.active ul li a i {
+    margin-right: 0;
+    display: block;
+    font-size: 1.8em;
+    margin-bottom: 2px;
+}
+
+/*//dropdown*/
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+}
+
+/* Add an active class to the active dropdown button */
+#btn1.active {
+    background-color: #000000;
+    color: #ffffff;
+    /*border-bottom-color: #bfa853;*/
+    border-color: #000000;
+}

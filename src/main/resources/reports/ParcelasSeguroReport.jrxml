@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SeguroReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee7e404d-54a2-4415-ad76-266d12f6e559">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="postgres"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="187"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="805"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="725"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="264"/>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<parameter name="ID" class="java.lang.Long"/>
+	<parameter name="DESCRICAO" class="java.lang.String"/>
+	<parameter name="ORDEM" class="java.lang.String"/>
+	<parameter name="data1" class="java.util.Date"/>
+	<parameter name="data2" class="java.util.Date"/>
+	<parameter name="SUBTITULO" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT public.parcelas.data_pago,
+	public.parcelas.data_vencimento,
+	public.parcelas.status,
+	public.parcelas.seguro_id,
+	public.seguros.id,
+	public.parcelas.id,
+	public.seguros.data_seg,
+	public.seguros.n_parcelas,
+	public.seguros.valor,
+	public.seguros.tipo_id,
+	public.seguros.usuario_id,
+	public.seguros.veiculo_id,
+	public.tipo_seguro.descricao,
+	public.tipo_seguro.id,
+	public.usuarios.id,
+	public.usuarios.email,
+	public.usuarios.nome,
+	public.usuarios.telefone,
+	public.veiculos.id,
+	public.veiculos.modelo,
+	public.veiculos.placa,
+	public.parcelas.tamanho,
+	public.seguros.parcelas_pagas,
+		public.seguros.vencimento,
+	data_vencimento
+FROM public.parcelas 
+	INNER JOIN public.seguros ON 
+	 public.parcelas.seguro_id = public.seguros.id  
+	INNER JOIN public.tipo_seguro ON 
+	 public.seguros.tipo_id = public.tipo_seguro.id 
+	INNER JOIN public.usuarios ON 
+	 public.seguros.usuario_id = public.usuarios.id 
+	INNER JOIN public.veiculos ON 
+	 public.seguros.veiculo_id = public.veiculos.id 
+WHERE  public.parcelas.status = 'aberto' and public.parcelas.data_vencimento between  $P{data1} and  $P{data2}
+order by public.parcelas.data_vencimento]]>
+	</queryString>
+	<field name="data_pago" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_pago"/>
+	</field>
+	<field name="data_vencimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_vencimento"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+	</field>
+	<field name="seguro_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="seguro_id"/>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="COLUMN_6" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="data_seg" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_seg"/>
+	</field>
+	<field name="n_parcelas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="n_parcelas"/>
+	</field>
+	<field name="valor" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+	</field>
+	<field name="tipo_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_id"/>
+	</field>
+	<field name="usuario_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="usuario_id"/>
+	</field>
+	<field name="veiculo_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="veiculo_id"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="COLUMN_14" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="COLUMN_15" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+	</field>
+	<field name="telefone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone"/>
+	</field>
+	<field name="COLUMN_19" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="modelo"/>
+	</field>
+	<field name="placa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="placa"/>
+	</field>
+	<field name="tamanho" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tamanho"/>
+	</field>
+	<field name="parcelas_pagas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="parcelas_pagas"/>
+	</field>
+	<field name="vencimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="vencimento"/>
+	</field>
+	<field name="COLUMN_25" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_vencimento"/>
+	</field>
+	<variable name="Variable_1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="10" width="400" height="30" uuid="521fc1ce-e9b1-4883-8928-9aac515ce357"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="40" width="400" height="30" uuid="f4d0206c-4a08-49e6-8d9e-fa98bff41d09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SUBTITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="106" height="20" uuid="39a3e2f0-da1b-4596-b61b-43b6ce330168">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ca3b5ff-86d6-47d2-beb2-736657522b28"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="0" width="50" height="30" uuid="3d0f9bbb-a3e1-43ce-9733-9d68ce99d2f3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ceba6764-9b88-434a-bb9e-b39d3c84c609"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tipo de Seguro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="0" width="50" height="30" uuid="6987fade-3392-4e51-bacc-320c4336a66b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="842d3543-85bb-4b14-994c-d1d1bd2f0893"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Data de Efetivação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="80" height="30" uuid="49622d05-d131-4182-a7c8-5e8bd379ed64">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="019e0e02-dabd-412b-bc0a-c8ddbcf87f06"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Numero da Parcelas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="11" width="64" height="20" uuid="29a69f11-6290-4262-9e52-65facc3d17f0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e528fb94-6739-415e-aa4c-b033e514983b"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="70" height="30" uuid="0b42e22c-e972-4651-848b-6a20f9e425d7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Vencimento Seguro]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="40" width="555" height="1" uuid="3c80ae89-2a11-4754-8f02-27bf8a7acb22">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="330" y="0" width="60" height="30" uuid="b659f4bb-0181-4ccd-a674-d0bb7ae04e84">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32baa02e-b9e3-4ce8-97d3-a576d71712a2"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Data Vencimento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="55" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="1" width="106" height="20" uuid="8d841cd2-bca2-4083-be9c-38e099247bd4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ca3b5ff-86d6-47d2-beb2-736657522b28"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="31" width="108" height="20" uuid="eef9d585-7acb-46d3-873f-5732fcef3c82">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b93e507-0a7a-420e-9251-3a0543583b63"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="17" width="108" height="20" uuid="03f6206a-6324-408b-a362-68c3ba2a1fea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="037aa873-8632-4fad-a8b5-f19ac618ab61"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="12" width="50" height="30" uuid="fd8106d2-ae2d-4da6-930f-4a0c760e137d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ceba6764-9b88-434a-bb9e-b39d3c84c609"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="12" width="90" height="30" uuid="b9eeadf2-a499-4166-9df5-ae2d3688c5aa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="842d3543-85bb-4b14-994c-d1d1bd2f0893"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{data_seg})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="12" width="40" height="30" uuid="112f898b-3a06-438f-9218-95cc5223a02f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e528fb94-6739-415e-aa4c-b033e514983b"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="50" width="555" height="1" uuid="7c740d63-e3b2-4c82-880b-c9ca10f59dc0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="400" y="12" width="24" height="30" uuid="d9e52836-18e8-404d-9402-f556105a951b"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[R$ ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="12" width="80" height="30" uuid="aabf621f-868f-4bb4-807a-d142df2b0d40">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8c8e7442-9263-4401-bcac-965db9bcd6ec"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{vencimento})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="12" width="60" height="30" uuid="7f968027-ff81-4108-bd4b-f0da1b1a7ba4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="790e23de-d91b-48e1-97a3-6793fde42a3a"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tamanho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="12" width="60" height="30" uuid="cecaf2ac-d5ca-400a-a166-866c51b53973">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32baa02e-b9e3-4ce8-97d3-a576d71712a2"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{data_vencimento})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="52">
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="507" y="22" width="50" height="30" uuid="727d149c-9775-4f4c-8235-de5b9ce1407e"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<section class="layout-content" layout:fragment="corpo">
+
+    <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <i class="oi oi-caret-right"></i>
+                    <span>Lista de E-mails</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="card">
+        <div class="card-body">
+            <div class="container-table" id="listagem">
+                <!--Botão Novo-->
+                <div style="padding-bottom: 10px">
+                    <button type="button" class="btn btn-primary btnNovoEmail" name="new">
+                        <span class="oi oi-plus"></span> Novo
+                    </button>
+                    <br/>
+                </div>
+                <!--exibe mensagem-->
+                <div class="alert  alert-success"
+                     th:if="${!#strings.isEmpty(mensagem)}">
+                    <i class="fa fa-check-circle"></i>
+                    <span th:text="${mensagem}">Mensagem de sucesso!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--<div th:replace="fragments/alert"></div>-->
+
+                <div class="table-responsive">
+                    <table id="tblListaEmail" class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                        <tr class="bg-light degrade">
+                            <th>Código.</th>
+                            <th>Titulo</th>
+                            <th>Texto</th>
+                            <th>Prazo 1</th>
+                            <th>Prazo 2</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="e : ${emails}">
+                            <td th:text="${e.id}"></td>
+                            <td th:text="${e.titulo}"></td>
+                            <td th:text="${e.texto}"></td>
+                            <td th:text="${e.prazo1}"></td>
+                            <td th:text="${e.prazo2}"></td>
+                            <td>
+                                <a th:href="@{/emails/{id} (id=${e.id})}" name="edit"
+                                   class="btn btn-info btn-sm btnEditarEmail">
+                                <span class="oi oi-pencil" title="Editar" aria-hidden="true"></span>
+                            </a>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-danger btn-sm" name="delete"
+                                        data-toggle="modal" data-target="#confirmRemove"
+                                        th:attr="data-id=${e.id}, data-name=${e.titulo}">
+                                    <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="bg-light text-center degrade">
+                            <td colspan="1"></td>
+                            <td colspan="4" class="pagination-div" style="padding-top: 15px">
+                                <div class="row justify-content-center">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                        <span th:if="${emails.hasPrevious()}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{/emails(page=${emails.number-1},size=${emails.size})}">Anterior</a>
+                                            </li>
+                                        </span>
+                                            <th:block th:each="i : ${#numbers.sequence(0, emails.totalPages - 1)}">
+                                            <span th:if="${emails.number == i}" class="selected">
+                                                <li class="page-item active">
+                                                    <a class="page-link">[[${i}+1]]</a>
+                                                </li>
+                                            </span>
+                                                <span th:unless="${emails.number == i}">
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                       th:href="@{/emails(page=${i},size=${emails.size})}">[[${i}+1]]</a>
+                                                </li>
+                                            </span>
+                                            </th:block>
+                                            <span th:if="${emails.hasNext()}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{/emails(page=${emails.number+1},size=${emails.size})}">Proximo</a>
+                                            </li>
+                                        </span>
+                                        </ul>
+                                    </nav>
+                                    <div class="dropdown " style="padding-left: 30px">
+                                        <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+                                           id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            Itens por página:
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" th:href="@{/emails(page=${0},size=${5})}">5</a>
+                                            <a class="dropdown-item" th:href="@{/emails(page=${0},size=${10})}">10</a>
+                                            <a class="dropdown-item" th:href="@{/emails(page=${0},size=${20})}">20</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="1"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/modalEmail :: modalEmail"></div>
+    <div class="myform">
+        <div class="modal fade" id="modalNewEditEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formNewEdit" name="formNewEdit"
+                              th:action="@{/emails/salvar}" th:object="${email}">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="titulo">Titulo</label>
+                                    <input type="text" class="form-control" id="titulo" name="titulo" autofocus="autofocus"
+                                           th:field="*{titulo}" th:classappend="${#fields.hasErrors('titulo')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" >
+                                        <span th:errors="*{titulo}"></span>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="texto">Texto</label>
+                                    <textarea rows="5" cols="25" class="form-control" name="texto" id="texto" autofocus="autofocus"
+                                              th:field="*{texto}" th:classappend="${#fields.hasErrors('texto')} ? 'is-invalid'"
+                                              required oninvalid="this.setCustomValidity('Campo obrigatorio!')"
+                                              oninput="setCustomValidity('')"></textarea>
+                                    <div class="invalid-feedback" >
+                                        <span th:errors="*{texto}"></span>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+
+                            <div class="form-row" id="praz">
+                                <div class="form-group col-md-6">
+                                    <label for="prazo1">Primeiro Prazo</label>
+                                    <input type="text" class="form-control" id="prazo1" name="prazo1" autofocus="autofocus"
+                                           th:field="*{prazo1}"  th:classappend="${#fields.hasErrors('prazo1')} ? 'is-invalid'"/>
+
+                                    <div class="invalid-feedback" >
+                                        <span th:errors="*{prazo1}"></span>
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="prazo2">Segundo Prazo</label>
+                                    <input type="text" class="form-control" id="prazo2" name="prazo2" autofocus="autofocus"
+                                           th:field="*{prazo2}"  th:classappend="${#fields.hasErrors('prazo2')} ? 'is-invalid'"/>
+
+                                    <div class="invalid-feedback" >
+                                        <span th:errors="*{prazo2}"></span>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+
+
+                            <input type="hidden" id="id" th:field="*{id}"/>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="oi oi-check"></span> Salvar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    <span class="oi oi-x"></span> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+</body>
+</html>
