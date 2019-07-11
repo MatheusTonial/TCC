@@ -68,14 +68,17 @@ public class RelatorioParcelaController {
             sub = data1 + " até " + strDate;
         }
 
-        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatório Parcelas a Vencer", dt1, dt2,
+        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatorio Parcelas a Vencer", dt1, dt2,
                 "classpath:/reports/ParcelasSeguroReport.jrxml", sub);
         if (botao.equalsIgnoreCase("mostrar")){
             gerarRelatorio.imprimir(response, jasperPrint);
-            attributes.addFlashAttribute("mensagem","Relatório gerado com seucesso!");
+            attributes.addFlashAttribute("mensagem","Relatorio gerado com seucesso!");
         }else if (botao.equalsIgnoreCase("baixar")){
             gerarRelatorio.baixar("RelatorioParcelasaVencer.pdf", response, jasperPrint);
-            attributes.addFlashAttribute("mensagem","Relatório baixado com sucesso!");
+            attributes.addFlashAttribute("mensagem","Relatorio baixado com sucesso!");
+        }else if(botao.equalsIgnoreCase("enviar")){
+            envioEmail.enviarArquivo("mateus_tonial@hotmail.com", "tcc email", "menssagem para teste email", gerarRelatorio.gerarPdf(jasperPrint), "RelatorioParcelasaVencer.pdf");
+            attributes.addFlashAttribute("mensagem","Email enviado com sucesso!");
         }
     }
 
@@ -96,7 +99,7 @@ public class RelatorioParcelaController {
         }else{
             sub = data1 + " até " + strDate;
         }
-        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatório Parcelas a Vencer", dt1, dt2,
+        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatorio Parcelas a Vencer", dt1, dt2,
                 "classpath:/reports/ParcelasSeguroReport.jrxml", sub);
         gerarRelatorio.imprimir(response, jasperPrint);
         envioEmail.enviarArquivo(endereco, assunto, texto, gerarRelatorio.gerarPdf(jasperPrint), "RelatorioParcelasaVencer.pdf");

@@ -37,10 +37,25 @@ public class RelatorioClienteController {
 
     @Autowired
     private SeguroRepository repository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private Tipo_SeguroRepository tipo_seguroRepository;
+
+    @Autowired
+    private VeiculoRepository veiculoRepository;
+
+    @Autowired
+    private EmailRepository emailRepository;
+
     @Autowired
     private SeguroReportService seguroReportService;
+
     @Autowired
     private GerarRelatorio gerarRelatorio;
+
     @Autowired
     private EnvioEmail envioEmail;
 
@@ -48,10 +63,9 @@ public class RelatorioClienteController {
 
 
     @GetMapping("/seguro")
-    public void export(@RequestParam("cliente") String cliente, @RequestParam(value = "botao") String botao,
-                       HttpServletResponse response, RedirectAttributes attributes)
-            throws IOException, JRException, SQLException {
-        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatório de Seguros por Cliente", cliente, "classpath:/reports/ClienteSeguroReport.jrxml", "", "");
+    public void export(@RequestParam("cliente") String cliente, @RequestParam(value = "botao") String botao, HttpServletResponse response, RedirectAttributes attributes) throws IOException, JRException, SQLException {
+        String ordem = "";
+        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatorio de Seguros por Cliente", cliente, "classpath:/reports/ClienteSeguroReport.jrxml", ordem, ordem);
         if (botao.equalsIgnoreCase("mostrar")) {
             gerarRelatorio.imprimir(response, jasperPrint);
         } else if (botao.equalsIgnoreCase("baixar")) {
@@ -63,9 +77,8 @@ public class RelatorioClienteController {
 
     @GetMapping("/email")
     public void email(@RequestParam("cliente") String cliente, @RequestParam("endereco") String endereco,
-                      @RequestParam("assunto") String assunto, @RequestParam("texto") String texto,
-                      HttpServletResponse response) throws IOException, JRException, SQLException {
-        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatório de Seguros por Cliente", cliente, "classpath:/reports/ClienteSeguroReport.jrxml", "", "");
+                      @RequestParam("assunto") String assunto, @RequestParam("texto") String texto, HttpServletResponse response) throws IOException, JRException, SQLException {
+        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatorio de Seguros por Cliente", cliente, "classpath:/reports/ClienteSeguroReport.jrxml", "", "");
         gerarRelatorio.imprimir(response, jasperPrint);
         envioEmail.enviarArquivo(endereco, assunto, texto, gerarRelatorio.gerarPdf(jasperPrint), "RelatorioCliente.pdf");
     }
@@ -77,6 +90,8 @@ public class RelatorioClienteController {
         modelAndView.addObject("seguro", new Seguro());
         return modelAndView;
     }
+
+
 }
 
 

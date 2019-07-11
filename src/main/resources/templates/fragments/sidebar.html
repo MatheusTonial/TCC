@@ -10,45 +10,39 @@
 <div class="container-fluid">
     <nav class="navbar-dark bg-dark navegacao" id="sidebar" th:fragment="nav-sidebar">
         <ul class=" list-unstyled components">
-            <li class="active">
-                <a class="list-group-item menu-brand text-menu sidebar-header" style="border-radius: 0px"
-                   th:href="@{/}">
+            <li class="active" >
+                <a class="list-group-item menu-brand text-menu sidebar-header" style="border-radius: 0px" th:href="@{/}">
                     <i class="oi oi-aperture"> </i>
                     <h5> Sistema Corretora</h5>
                 </a>
             </li>
 
             <li>
-                <button id="btn1" style="border-radius: 0px"
-                        class="list-group-item list-group-item-action bg-dark text-menu dropdown-btn">
-                    <i class="fa fa-file-text"></i> Relatórios <i class="fa fa-caret-down"></i>
+                <button id="btn1" style="border-radius: 0px" class="list-group-item list-group-item-action bg-dark text-menu dropdown-btn">
+                    <i class="fa fa-file-text"></i> Relatórios
+                    <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-container">
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/relatorio/seguro}">Seguros a Vencer</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/relatorio/cliente}">Seguro do Cliente</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/relatorio/parcela}">Parcelas a Vencer</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/relatorio/vencidas}">Parcelas Vencidas</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/relatorio/tipo}">Tipo de Seguro</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/relatorio/seguro}">Seguros a Vencer</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/relatorio/cliente}">Seguro do Cliente</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/relatorio/parcela}">Parcelas a Vencer</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/relatorio/vencidas}">Parcelas Vencidas</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/relatorio/tipo}">Tipo de Seguro</a>
                 </div>
             </li>
             <li>
-                <button id="btn2" style="border-radius: 0px"
-                        class="list-group-item list-group-item-action bg-dark text-menu dropdown-btn">
-                    <i class="fa fa-lock"></i> Seguros<i class="fa fa-caret-down"></i>
+                <button id="btn2" style="border-radius: 0px" class="list-group-item list-group-item-action bg-dark text-menu dropdown-btn">
+                    <i class="fa fa-lock"></i> Seguros
+                    <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-container">
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/seguros}">Todos os Seguros</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/seguros/abertos}">Seguros a Pagar</a>
-                    <a class="list-group-item list-group-item-action bg-dark text-menu"
-                       th:href="@{/seguros/pagos}">Seguros Pagos</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/seguros}">Todos os Seguros</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/seguros/abertos}">Seguros a Pagar</a>
+                    <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/seguros/pagos}">Seguros Pagos</a>
                 </div>
+                <!--<a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/seguros}">-->
+                    <!--<i class="fa fa-lock"></i> Seguro-->
+                <!--</a>-->
             </li>
             <li>
                 <a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/tipo_Seguros}">
@@ -61,7 +55,8 @@
                 </a>
             </li>
             <li>
-                <a class="list-group-item list-group-item-action bg-dark text-menu " th:href="@{/marcas}">
+                <a class="list-group-item list-group-item-action bg-dark text-menu "
+                   th:href="@{/marcas}">
                     <i class="fa fa-bookmark"></i> Marcas
                 </a>
             </li>
@@ -80,8 +75,21 @@
                     <i class="fa fa-globe"></i> Estados
                 </a>
             </li>
+            <!--<li>-->
+                <!--<a class="list-group-item list-group-item-action bg-dark text-menu" th:href="@{/emails}">-->
+                    <!--<i class="fa fa-envelope"></i> E-mail-->
+                <!--</a>-->
+            <!--</li>-->
+
+
+
         </ul>
+        <!--</div>-->
     </nav>
+
+
 </div>
+
+
 </body>
 </html>

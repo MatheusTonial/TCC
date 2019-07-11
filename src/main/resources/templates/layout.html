@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <title>TCC</title>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport"
@@ -12,23 +13,35 @@
     <meta name="author" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet"/>
+    <link href="/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css"
+          rel="stylesheet"/>
+
+    <!--Material design bootstrap-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.3/css/mdb.min.css" rel="stylesheet">-->
+
+    <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet"/>
     <link href="/css/modal.css" rel="stylesheet"/>
     <link href="/css/table.css" rel="stylesheet"/>
     <link href="/css/sideicone.css" rel="stylesheet"/>
+
 </head>
 <body>
+
 <div class="layout-main">
+
     <aside>
-        <div class="wrapper" sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="wrapper"  sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="row row-offcanvas row-offcanvas-left"
                  th:replace="fragments/sidebar :: nav-sidebar">
                 <span>menu</span>
             </div>
         </div>
     </aside>
+
     <div class="container-fluid ">
         <header th:replace="fragments/header :: cabecalho">
             <div>header</div>
@@ -40,32 +53,68 @@
     <footer th:replace="fragments/footer :: rodape">
         <div>footer</div>
     </footer>
+
 </div>
 
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/additional-methods.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/localization/messages_pt_BR.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/additional-methods.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/localization/messages_pt_BR.js}" ></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.js"></script>-->
+<!--script modalNewEdit e delete-->
 <script th:src="@{/js/delete.js}"></script>
-<script type="text/javascript" th:src="@{/js/modalNewEditMarca.js}"></script>
-<script type="text/javascript" th:src="@{/js/modalNewEditVeiculo.js}"></script>
-<script type="text/javascript" th:src="@{/js/modalNewEditUsuario.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditMarca.js}" ></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditVeiculo.js}" ></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditUsuario.js}" ></script>
 <script type="text/javascript" th:src="@{/js/modalNewEditEstado.js}"></script>
-<script type="text/javascript" th:src="@{/js/modalNewEditCidade.js}"></script>
-<script type="text/javascript" th:src="@{/js/modalNewEditEmail.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditCidade.js}" ></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditEmail.js}" ></script>
 <script type="text/javascript" th:src="@{/js/modalNewEditSeguro.js}"></script>
-<script type="text/javascript" th:src="@{/js/modalNewEditTipoSeguro.js}"></script>
-<script type="text/javascript" th:src="@{/js/modalIndex.js}"></script>
+<script type="text/javascript" th:src="@{/js/modalNewEditTipoSeguro.js}" ></script>
+<script type="text/javascript" th:src="@{/js/modalIndex.js}" ></script>
 <script type="text/javascript">
+
+
     $(function () {
+
         $('.navbar-toggle').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
+
     });
 </script>
+<!--<script>-->
+
+    <!--function getDate() {-->
+        <!--var today = new Date();-->
+        <!--var dd = today.getDate();-->
+        <!--var mm = today.getMonth()+1; //January is 0!-->
+        <!--var yyyy = today.getFullYear();-->
+
+        <!--if(dd<10) {-->
+            <!--dd = '0'+dd-->
+        <!--}-->
+
+        <!--if(mm<10) {-->
+            <!--mm = '0'+mm-->
+        <!--}-->
+
+        <!--today = dd + '/' + mm + '/' + yyyy;-->
+        <!--console.log(today);-->
+        <!--document.getElementById("date").value = today;-->
+    <!--}-->
+    <!---->
+    <!--window.onload = function() {-->
+        <!--getDate();-->
+    <!--};-->
+<!--</script>-->
 <script>
     // sidebar dropdown
     /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
@@ -83,6 +132,7 @@
             }
         });
     }
+
 </script>
 </body>
 </html>

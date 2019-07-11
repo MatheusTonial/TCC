@@ -26,27 +26,30 @@ public class Seguro {
     @Column(nullable = false)
     private Double valor;
 
-    @NotNull
+    @NotNull(message = "Campo em branco!")
     @Column(nullable = false)
     private Integer nParcelas;
 
-    @NotNull
+    @NotNull(message = "Campo em branco!")
     @Column(nullable = false)
     private Integer parcelasPagas;
 
     @Column(nullable = true)
     private String situacao;
 
+        //data do vencimento
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name= "dataSeg", nullable = false, columnDefinition = "DATE")
+//    @Convert(converter = SeguroConverter.LocalDateConverter.class)
     private LocalDate dataSeg;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name= "vencimento", nullable = true, columnDefinition = "DATE")
+//    @Convert(converter = SeguroConverter.LocalDateConverter.class)
     private LocalDate vencimento;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
     private Usuario usuario;
 
@@ -63,4 +66,17 @@ public class Seguro {
     @OneToOne
     @JoinColumn(name = "email_id", referencedColumnName = "id", nullable = false)
     private Email email;
+
+
+//    public LocalDate getData() {
+////        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+////        String formattedString = data.format(formatter);
+//        return data;
+//    }
+//
+//    public void setData(String data) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        LocalDate date = LocalDate.parse(data,formatter);
+//        this.data = date;
+//    }
 }

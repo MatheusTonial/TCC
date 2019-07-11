@@ -65,34 +65,34 @@ INSERT INTO emails(texto, prazo1, prazo2, titulo) VALUES ('Prezado CLIENTE, seu 
 INSERT INTO emails(texto, prazo1, prazo2, titulo) VALUES ('Prezado CLIENTE, a proxima parcela de seu seguro de TIPO ira vencer em DATA', 5, 10, 'Vencimento Parcela Seguro');
 
 
-INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('11-03-2019', 2, 3500, 1, 1, 1, 1, 1, '11-08-2020');
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('10-04-2019', '11-04-2019', '1/2', 'pago', 1);
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '11-05-2019', '2/2', 'aberto', 1);
+INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('11-08-2019', 2, 3500, 1, 1, 1, 1, 1, '11-08-2020');
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('10-09-2019', '11-09-2019', '1/2', 'pago', 1);
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '11-10-2019', '2/2', 'aberto', 1);
 
-INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('10-06-2018', 4, 5000, 1, 2, 2, 1, 2, '10-06-2019');
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('07-07-2018', '10-07-2018', '1/4', 'pago', 2);
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('04-08-2018', '10-08-2018', '2/4', 'pago', 2);
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '10-09-2018', '3/4', 'aberto', 2);
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '10-10-2018', '4/4', 'aberto', 2);
+INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('06-04-2019', 4, 5000, 1, 2, 2, 1, 2, '06-04-2020');
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('05-05-2019', '06-05-2019', '1/4', 'pago', 2);
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('04-06-2019', '06-06-2019', '2/4', 'pago', 2);
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '06-07-2019', '3/4', 'aberto', 2);
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '06-08-2019', '4/4', 'aberto', 2);
 
 
 INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento, situacao) VALUES ('01-01-2019', 1, 6650, 1, 2, 2, 1, 1, '01-01-2020', 'terminado');
 INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('01-02-2019', '01-02-2019', '1/1', 'pago', 3);
 
-INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento, situacao) VALUES ('03-02-2019', 2, 5900, 1, 3, 1, 1, 2, '03-02-2020', 'terminado');
+INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento, situacao) VALUES ('03-02-2019', 2, 5900, 1, 3, 2, 1, 2, '03-02-2020', 'terminado');
 INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('01-03-2019', '03-03-2019', '1/2', 'pago', 4);
 INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('03-04-2019', '03-04-2019', '2/2', 'pago', 4);
 
-INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('30-05-2018', 2, 5000, 1, 1, 2, 1, 1, '30-05-2019');
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('04-06-2018', '30-06-2018', '1/2', 'pago', 5);
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '30-07-2018', '2/2', 'aberto', 5);
+INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('19-07-2018', 2, 5000, 1, 1, 2, 1, 1, '19-07-2019');
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('04-06-2018', '19-08-2018', '1/2', 'pago', 5);
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '19-09-2018', '2/2', 'aberto', 5);
 
-INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento, situacao) VALUES ('12-02-2019', 1, 5000, 1, 2, 2, 1, 1, '12-02-2020', 'terminado');
+INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento, situacao) VALUES ('12-02-2019', 1, 5000, 1, 2, 1, 1, 1, '12-02-2020', 'terminado');
 INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('10-03-2019', '12-03-2019', '1/1', 'pago', 6);
 
-INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('01-04-2019', 3, 5000, 1, 2, 1, 1, 2, '01-04-2020');
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('01-05-2019', '01-05-2019', '1/3', 'pago', 7);
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('01-06-2019', '01-06-2019', '2/3', 'pago', 7);
-INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '01-07-2019', '3/3', 'aberto', 7);
+INSERT INTO seguros(data_seg, n_parcelas, valor, email_id, tipo_id, usuario_id, veiculo_id, parcelas_pagas, vencimento) VALUES ('01-04-2018', 3, 5000, 1, 2, 2, 1, 2, '01-04-2019');
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('01-05-2018', '01-05-2018', '1/3', 'pago', 7);
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES ('01-06-2018', '01-06-2018', '2/3', 'pago', 7);
+INSERT INTO parcelas(data_pago, data_vencimento, tamanho, status, seguro_id) VALUES (null, '01-07-2018', '3/3', 'aberto', 7);
 
 

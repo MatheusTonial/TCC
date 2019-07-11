@@ -116,7 +116,15 @@ body#LoginForm{
     border:solid 1px #000000;
 }
 
-#myIframe #myIframeCli{
+#myIframe {
+    width: 635px;
+    height: 265px;
+    border: none;
+    margin: 0 auto;
+    display: block;
+}
+
+#myIframeCli{
     width: 635px;
     height: 265px;
     border: none;
@@ -173,11 +181,14 @@ body#LoginForm{
     height: 400px;
 }
 
-@media only screen and (max-width: 1000px){
+@media only screen and (max-width: 1200px){
     body #barra{
         width: 100%;
     }
     #pizza{
         width: 100%;
+    }
+    .esquerda{
+        width: 15%;
     }
 }

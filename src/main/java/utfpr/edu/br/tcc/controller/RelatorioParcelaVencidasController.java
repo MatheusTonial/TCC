@@ -51,29 +51,28 @@ public class RelatorioParcelaVencidasController {
     public void export(@RequestParam(value = "botao") String botao, RedirectAttributes attributes,
                        HttpServletResponse response) throws IOException, JRException, SQLException, ParseException {
 
-        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatório Parcelas Vencidas", hoje, hoje,
+        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatorio Parcelas a Vencer", hoje, hoje,
                 "classpath:/reports/ParcelasVencidasReport.jrxml", "");
         if (botao.equalsIgnoreCase("mostrar")){
             gerarRelatorio.imprimir(response, jasperPrint);
         }else if (botao.equalsIgnoreCase("baixar")){
             gerarRelatorio.baixar("RelatorioParcelasaVencidas.pdf", response, jasperPrint);
-            attributes.addFlashAttribute("mensagem","Relatório baixado com sucesso!");
+            attributes.addFlashAttribute("mensagem","Relatorio baixado com sucesso!");
         }
     }
 
     @GetMapping("/email")
-    public void email(@RequestParam("endereco") String endereco, @RequestParam("assunto") String assunto, @RequestParam("texto") String texto, RedirectAttributes attributes, HttpServletResponse response) throws IOException, JRException, SQLException, ParseException {
+    public void email(@RequestParam("endereco") String endereco, @RequestParam("assunto") String assunto, @RequestParam("texto") String texto, HttpServletResponse response) throws IOException, JRException, SQLException, ParseException {
 
-        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatório Parcelas Vencidas", hoje, hoje,
-                "classpath:/reports/ParcelasVencidasReport.jrxml", "");
-//        gerarRelatorio.imprimir(response, jasperPrint);
+        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatorio Parcelas a Vencer", hoje, hoje,
+                "classpath:/reports/RelatorioParcelasaVencidas.jrxml", "");
+        gerarRelatorio.imprimir(response, jasperPrint);
         envioEmail.enviarArquivo(endereco, assunto, texto, gerarRelatorio.gerarPdf(jasperPrint), "RelatorioParcelasVencidas.pdf");
-        attributes.addFlashAttribute("mensagem","Relatório baixado com sucesso!");
     }
 
 
     @GetMapping
-    public ModelAndView listar(@PageableDefault Pageable pageable) throws SQLException, IOException, JRException {
+    public ModelAndView listar(@PageableDefault Pageable pageable) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.now();
         Page<Parcelas> page = parcelasRepository.findAllByDataVencimentoAfterOrderById(localDate, pageable);

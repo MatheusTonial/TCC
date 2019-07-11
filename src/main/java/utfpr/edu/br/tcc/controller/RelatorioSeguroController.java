@@ -73,7 +73,7 @@ public class RelatorioSeguroController {
             sub = data1 + " até " + strDate;
         }
 
-        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatório Seguros a Vencer", dt1, dt2,
+        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatorio Seguros a Vencer", dt1, dt2,
                 "classpath:/reports/VencimentoSeguroEntreReport.jrxml", sub);
         if (botao.equalsIgnoreCase("mostrar")){
             gerarRelatorio.imprimir(response, jasperPrint);
@@ -101,7 +101,7 @@ public class RelatorioSeguroController {
         }else{
             sub = data1 + " até " + strDate;
         }
-        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatório Seguros a Vencer", dt1, dt2,
+        JasperPrint jasperPrint = seguroReportService.generateRelatorioData(1L, "Relatorio Seguros a Vencer", dt1, dt2,
                 "classpath:/reports/VencimentoSeguroEntreReport.jrxml", sub);
         gerarRelatorio.imprimir(response, jasperPrint);
         envioEmail.enviarArquivo(endereco, assunto, texto, gerarRelatorio.gerarPdf(jasperPrint), "RelatorioSegurosaVencer.pdf");

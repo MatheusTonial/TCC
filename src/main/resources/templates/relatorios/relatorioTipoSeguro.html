@@ -14,7 +14,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <i class="oi oi-caret-right"></i>
-                    <span>Relatório Tipos de Seguro</span>
+                    <span>Relatorio Tipos de Seguro</span>
                 </li>
             </ul>
         </div>
@@ -50,14 +50,21 @@
                                         </select>
 
                                     </div>
+                                    <!--<label class="mb-2">Ordenar por </label>-->
+                                    <!--<div class="input-group mx-sm-3 mb-2">-->
+                                    <!--<select id="ordem" name="ordem" class="form-control">-->
+                                    <!--<option v alue="usuarios.nome">Nome Cliente</option>-->
+                                    <!--<option value="seguros.data_seg">Data Seguro</option>-->
+                                    <!--<option value="seguros.valor">Valor Seguro</option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
                                     <button class="btn btn-outline-dark mb-2 mr-2"
                                             onclick="this.form.target='my_iframe'" th:name="botao" th:value="mostrar"><i
-                                            class="fa fa-file-text"></i> Gerar Relatório
+                                            class="fa fa-file-text"></i> Gerar Relatorio
                                     </button>
                                     <button class="btn btn-outline-dark mb-2 mr-2" th:name="botao" th:value="baixar"><i
                                             class="fa fa-download"></i> Download
                                     </button>
-                                </form>
                                 </form>
                                 <button class="btn btn-outline-dark mb-2 mr-2" data-toggle="modal"
                                         data-target="#mandarEmail"><i class="fa fa-envelope"></i> Enviar e-mail

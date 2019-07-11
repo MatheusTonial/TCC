@@ -8,21 +8,21 @@
 <body>
 <header th:fragment="cabecalho">
     <nav class="navbar navbar-dark menu-barra">
-        <div class="navbar-header">
-            <button type="button" class="btn menu-barra text-white navbar-toggle "
-                    id="sidebarCollapse" sec:authorize="hasRole('ADMIN')">
+        <div class="navbar-header" >
+            <button type="button" class="btn menu-barra text-white navbar-toggle " id="sidebarCollapse" sec:authorize="hasRole('ADMIN')">
                 <i class="oi oi-menu"></i>
             </button>
         </div>
         <div class="navbar-header">
             <div class="dropdown">
-                <button type="button" class="btn menu-barra text-white dropdown-toggle"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn menu-barra text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
                     <i class="fa fa-user-circle"></i>
+                    <!--<span>Ola</span>-->
                     <span th:text="${#httpServletRequest.userPrincipal.principal.username}"></span>
                 </button>
                 <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item bg-dark text-white" href="/"><i class="fa fa-home"></i> Home</a>
+                    <a class="dropdown-item bg-dark text-white" href="/" sec:authorize="hasRole('ADMIN')"><i class="fa fa-home"></i> Home</a>
                     <a class="dropdown-item bg-dark text-white" href="/logout"><i class="fa fa-sign-out"></i>Sair</a>
                 </div>
             </div>

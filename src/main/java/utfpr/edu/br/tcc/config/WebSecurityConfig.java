@@ -1,5 +1,6 @@
 package utfpr.edu.br.tcc.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.usuarioService = usuarioService;
     }
 
-    @Override//autorizaçao de acesso
+    @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable().exceptionHandling().accessDeniedPage("/403")
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/")
@@ -50,18 +51,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").hasAnyRole("USER", "ADMIN");
 
         http.headers().frameOptions().sameOrigin();
+
     }
 
-    @Override//ignora autenticaçao
+    @Override
     public void configure(WebSecurity web) throws Exception{
         web.ignoring().antMatchers("/fragments/**")
-                .antMatchers("/images/**")
-                .antMatchers("/webjars/**")
-                .antMatchers("/assets/**")
+                    .antMatchers("/images/**")
+                    .antMatchers("/webjars/**")
+                    .antMatchers("/assets/**")
                 .antMatchers("/css/**")
                 .antMatchers("/static/**")
                 .antMatchers("../resources/static/js/**")
-                .antMatchers("/layout/**");
+                    .antMatchers("/layout/**");
     }
 
     @Bean
@@ -74,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Override//fazer autenticaçao do usuario
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
@@ -84,6 +86,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(this.usuarioService);
+
         return daoAuthenticationProvider;
     }
+
+
+
+
+
+
 }

@@ -41,13 +41,66 @@ public class SeguroController {
     @Autowired
     private ParcelasRepository parcelasRepository;
     @Autowired
-    private EnvioEmail envioEmail;
+    EnvioEmail envioEmail;
+
+//    @Autowired
+//    private SQLReportDecorator sqlReportDecorator;
 
     ModelAndView modelAndView = new ModelAndView("seguro/list");
 
     @GetMapping("/novo")
     public ModelAndView novo(Seguro seguro) {
         modelAndView.addObject(seguro);
+        return modelAndView;
+    }
+    public ModelAndView carregar(@PageableDefault Pageable pageable){
+        modelAndView.addObject("parcelas", parcelasRepository.findAll(pageable));
+        modelAndView.addObject("emails", emailRepository.findAllByOrderById(pageable));
+        modelAndView.addObject("email", new Email());
+
+        List<Parcelas> pc = parcelasRepository.findAllByOrderById();
+
+        StringBuilder list1 = new StringBuilder();
+        for(int i = 1; i < pc.size(); i++){
+            list1.append(pc.get(i-1).getDataVencimento().toString()).append(";")
+                    .append(pc.get(i-1).getStatus()).append(";")
+                    .append(pc.get(i-1).getSeguro().getId()).append(",");
+        }
+        modelAndView.addObject("listaParcelaSeg", list1);
+        return modelAndView;
+    }
+
+    @GetMapping
+    public ModelAndView listar(@PageableDefault Pageable pageable) {
+        Page<Seguro> page = repository.findAllByOrderById(pageable);
+        modelAndView.addObject("seguros", page);
+        modelAndView.addObject("seguro", new Seguro());
+
+        carregar(pageable);
+        return modelAndView;
+    }
+
+    @GetMapping("/pagos")
+    public ModelAndView listarPagos(@PageableDefault Pageable pageable){
+        modelAndView.addObject("seguros", repository.findAllBySituacaoOrderById("terminado", pageable));
+        modelAndView.addObject("seguro", new Seguro());
+        carregar(pageable);
+        return modelAndView;
+    }
+
+    @GetMapping("/abertos")
+    public ModelAndView listarAbertos(@PageableDefault Pageable pageable){
+        modelAndView.addObject("seguros", repository.findAllBySituacaoNull(pageable));
+        modelAndView.addObject("seguro", new Seguro());
+        carregar(pageable);
+        return modelAndView;
+    }
+
+    @GetMapping("/parcela")
+    public ModelAndView parcelas(@PageableDefault Pageable pageable, Long id){
+        modelAndView.addObject("parcelas", parcelasRepository.findBySeguro_IdOrderById(id, pageable));
+        modelAndView.addObject("parcela", new Parcelas());
+
         return modelAndView;
     }
 
@@ -74,62 +127,15 @@ public class SeguroController {
         return new ModelAndView("redirect:/seguros");
     }
 
-    public ModelAndView carregar(@PageableDefault Pageable pageable){
-        modelAndView.addObject("parcelas", parcelasRepository.findAll(pageable));
-        modelAndView.addObject("emails", emailRepository.findAllByOrderById(pageable));
-        modelAndView.addObject("email", new Email());
-        List<Parcelas> pc = parcelasRepository.findAllByOrderById();
-
-        StringBuilder list1 = new StringBuilder();
-        for(int i = 1; i < pc.size(); i++){
-            list1.append(pc.get(i-1).getDataVencimento().toString()).append(";")
-                    .append(pc.get(i-1).getStatus()).append(";")
-                    .append(pc.get(i-1).getSeguro().getId()).append(",");
-        }
-        modelAndView.addObject("listaParcelaSeg", list1);
-        return modelAndView;
-    }
-
-    @GetMapping
-    public ModelAndView listar(@PageableDefault Pageable pageable) {
-        Page<Seguro> page = repository.findAllByOrderById(pageable);
-        modelAndView.addObject("seguros", page);
-        modelAndView.addObject("seguro", new Seguro());
-        carregar(pageable);
-        return modelAndView;
-    }
-
-    @GetMapping("/pagos")
-    public ModelAndView listarPagos(@PageableDefault Pageable pageable){
-        modelAndView.addObject("seguros", repository.findAllBySituacaoOrderById("terminado", pageable));
-        modelAndView.addObject("seguro", new Seguro());
-        carregar(pageable);
-        return modelAndView;
-    }
-
-    @GetMapping("/abertos")
-    public ModelAndView listarAbertos(@PageableDefault Pageable pageable){
-        modelAndView.addObject("seguros", repository.findAllBySituacaoNull(pageable));
-        modelAndView.addObject("seguro", new Seguro());
-        carregar(pageable);
-        return modelAndView;
-    }
-
-//    @GetMapping("/parcela")
-//    public ModelAndView parcelas(@PageableDefault Pageable pageable, Long id){
-//        modelAndView.addObject("parcelas", parcelasRepository.findBySeguro_IdOrderById(id, pageable));
-//        modelAndView.addObject("parcela", new Parcelas());
-//
-//        return modelAndView;
-//    }
-
     @GetMapping("/confirmar/{id}/{idData}")
     @ResponseBody
     public List<String> confirmar(@PathVariable("id") Long id, @PathVariable("idData") String dataP, RedirectAttributes attributes){
         Seguro seguro = repository.findOne(id);
         Email email;
         String data = "";
+        String tt = "";
         if(dataP.equalsIgnoreCase("1")){
+            tt = "1";
             email = emailRepository.findOne(1L);
             LocalDate date = seguro.getVencimento();
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -137,6 +143,7 @@ public class SeguroController {
         }else{
             email = emailRepository.findOne(2L);
             data = dataP.substring(0, 2)+"/"+dataP.substring(2, 4)+"/"+dataP.substring(4);
+            tt = data;
         }
         String titulo = email.getTitulo();
         String texto = email.getTexto();
@@ -150,30 +157,33 @@ public class SeguroController {
         texto = texto.replaceAll("TIPO", seguro.getTipoSeguro().getDescricao());
         texto = texto.replaceAll("DATA", data);
 
-        List<String> confirmar = new ArrayList<>(4);
+        List<String> confirmar = new ArrayList<>(5);
         confirmar.add(0, seguro.getUsuario().getEmail());
         confirmar.add(1, titulo);
         confirmar.add(2, texto);
         confirmar.add(3, seguro.getId().toString());
+        confirmar.add(4, tt);
         return confirmar;
-    }
 
-    @GetMapping("/{id}")
-    @ResponseBody
-    public Seguro editar(@PathVariable Long id, RedirectAttributes attr) {
-        attr.addFlashAttribute("mensagem", "Seguro editado com sucesso!");
-        return repository.findOne(id);
     }
 
     @GetMapping("/enviar")
-    public ModelAndView enviar(@RequestParam Long id, RedirectAttributes attributes){
+    public ModelAndView enviar(@RequestParam Long id, @RequestParam String tipoE, RedirectAttributes attributes){
         Seguro seguro = repository.findOne(id);
-        Email email = emailRepository.findOne(1L);
+        String data = "";
+        Email email;
+        if (tipoE.equals("1")){
+            email = emailRepository.findOne(1L);
+            LocalDate date = seguro.getDataSeg();
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            data = date.format(formatters);
+
+        }else {
+            email = emailRepository.findOne(2L);
+            data = tipoE;
+        }
         String titulo = email.getTitulo();
         String texto = email.getTexto();
-        LocalDate date = seguro.getDataSeg();
-        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String data = date.format(formatters);
 
         titulo = titulo.replaceAll("CLIENTE", seguro.getUsuario().getNome());
         titulo = titulo.replaceAll("TIPO", seguro.getTipoSeguro().getDescricao());
@@ -187,6 +197,13 @@ public class SeguroController {
         return new ModelAndView("redirect:/seguros");
     }
 
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Seguro editar(@PathVariable Long id, RedirectAttributes attr) {
+        attr.addFlashAttribute("mensagem", "Seguro editado com sucesso!");
+        return repository.findOne(id);
+    }
+
     @GetMapping("/email/{id}")
     @ResponseBody
     public Email email(@PathVariable Long id, RedirectAttributes attr) {
@@ -196,8 +213,11 @@ public class SeguroController {
 
     @PostMapping("/email/salvar")
     public ModelAndView salvarEmail(@Valid Email email, BindingResult result, RedirectAttributes attr) {
+//        if (result.hasErrors()){
+//            return novo(email);
+//        }
         emailRepository.save(email);
-        attr.addFlashAttribute("mensagem", "Email inserido com sucesso!");
+        attr.addFlashAttribute("mensagem", "Email atualizado com sucesso!");
         return new ModelAndView("redirect:/seguros");
     }
 
@@ -234,6 +254,11 @@ public class SeguroController {
         return modelAndView;
     }
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true));
+    }
+
     @ModelAttribute("usuarios")
     public List<Usuario> listaDeUsuario() {
         return usuarioRepository.findAll();
@@ -254,10 +279,6 @@ public class SeguroController {
         return emailRepository.findAll();
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true));
-    }
 
 
 }

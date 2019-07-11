@@ -18,23 +18,32 @@ public class EnvioEmail {
 
     public void enviarMensagem(String endereco, String assunto, String menssagem){
         SimpleMailMessage email = new SimpleMailMessage();
+
         email.setTo(endereco);
+
         email.setSubject(assunto);
         email.setText(menssagem);
+
         mailSender.send(email);
     }
 
+
     public void enviarArquivo(String endereco, String assunto, String menssagem, byte[] bytes, String nomeArquivo){
         MimeMessage message = mailSender.createMimeMessage();
+
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(endereco);
             helper.setSubject(assunto);
             helper.setText(menssagem);
+
             helper.addAttachment(nomeArquivo, new ByteArrayResource(bytes));
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
+
+
+
 }

@@ -6,19 +6,6 @@ $(function () {
     var lp = document.getElementById('listagemParcela').innerText;
     lp = lp.split(',');
 
-
-    $('#tipoSeguro').on('change', function () {
-        var elem = document.getElementById("tipoSeguro");
-        var strUser = elem.options[elem.selectedIndex].text;
-        var divHid = document.getElementById("divVeiculo");
-        if (strUser == "Veiculo") {
-            divHid.style.visibility = 'visible';
-        } else {
-            divHid.style.visibility = 'hidden';
-        }
-    });
-
-
     for (var i = 1; i < tabela.rows.length; i++) {
         for (var j = 0; j < tabela.rows[i].cells.length; j++) {
             if (j == 4) {
@@ -26,51 +13,44 @@ $(function () {
                 d = d.split('/');
                 var ds = new Date((d[2]), d[1] - 1, d[0]);
                 ds.setFullYear(ds.getFullYear() + 1);
-                if (today < ds) {
-                    var res = Math.abs(ds - today) / 1000;
-                    var dias = Math.floor(res / 86400);
-                    var p1 = (tabela.rows[i].cells[7]).getElementsByClassName('prazo1')[0].innerText;
-                    var p2 = (tabela.rows[i].cells[7]).getElementsByClassName('prazo2')[0].innerText;
-                    var idS = tabela.rows[i].getElementsByClassName('idSeguro')[0].innerText;
-                    var email = (tabela.rows[i].cells[7]).getElementsByClassName('btnNotificacao')[0];
-                    // MUDAR IF PARA ==
-                    if (dias <= p1 || dias <= p2) {
-                        email.setAttribute('href', '/seguros/confirmar/' + idS + '/1');
-                        email.style.visibility = 'visible';
-                    }
 
-                    for (var x = 0; x < lp.length; x++) {
-                        var sta = lp[x].substring(11, 17);
-                        var idSS = lp[x].substring(lp[x].length - 1, lp[x].length);
-                        if (sta == "aberto" && idSS == idS) {
-                            var diaP = lp[x].substring(0, 10);
-                            var idData = "";
-                            diaP = diaP.split('-');
-                            idData = diaP[2] + diaP[1] + diaP[0];
-                            var dataPa = new Date((diaP[0]), diaP[1] - 1, diaP[2]);
-                            var comp = Math.abs(dataPa - today) / 1000;
-                            var diasPa = Math.floor(comp / 86400);
-                            // MUDAR IF PARA ==
-                            if (diasPa <= p1 || diasPa <= p2) {
-                                // var email = (tabela.rows[i].cells[7]).getElementsByClassName('btnNotificacao')[0];
-                                var email2 = (tabela.rows[i].cells[7]).getElementsByClassName('btnNotificacao')[0];
-                                email.setAttribute('href', '/seguros/confirmar/' + idS + '/' + idData);
-                                email2.style.visibility = 'visible';
-                            }
+                var res = Math.abs(ds - today) / 1000;
+                var dias = Math.floor(res / 86400);
+                var p1 = (tabela.rows[i].cells[7]).getElementsByClassName('prazo1')[0].innerText;
+                var p2 = (tabela.rows[i].cells[7]).getElementsByClassName('prazo2')[0].innerText;
+                var idS = tabela.rows[i].getElementsByClassName('idSeguro')[0].innerText;
+
+                var email = (tabela.rows[i].cells[7]).getElementsByClassName('btnNotificacao')[0];
+                // MUDAR IF PARA ==
+                if (dias <= p1 || dias <= p2) {
+                    email.setAttribute('href', '/seguros/confirmar/' + idS + '/1');
+                    email.style.visibility = 'visible';
+                }
+
+                for (var x = 0; x < lp.length; x++) {
+                    var sta = lp[x].substring(11, 17);
+                    var idSS = lp[x].substring(lp[x].length - 1, lp[x].length);
+                    if (sta == "aberto" && idSS == idS) {
+                        var diaP = lp[x].substring(0, 10);
+                        var idData = "";
+                        diaP = diaP.split('-');
+                        idData = diaP[2] + diaP[1] + diaP[0];
+                        var dataPa = new Date((diaP[0]), diaP[1] - 1, diaP[2]);
+                        var comp = Math.abs(dataPa - today) / 1000;
+                        var diasPa = Math.floor(comp / 86400);
+                        // MUDAR IF PARA ==
+                        if (diasPa <= p1 || diasPa <= p2) {
+                            // var email = (tabela.rows[i].cells[7]).getElementsByClassName('btnNotificacao')[0];
+                            var email2 = (tabela.rows[i].cells[7]).getElementsByClassName('btnNotificacao')[0];
+                            email.setAttribute('href', '/seguros/confirmar/' + idS + '/' + idData);
+                            email2.style.visibility = 'visible';
                         }
                     }
                 }
             }
         }
     }
-
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip({
-            trigger: 'hover'
-        });
-    });
-
-
+// iframe
     $('.btnTabela').on('click', function () {
         var href = $(this).attr('href');
         var tag = $(this).attr('target');
@@ -84,12 +64,28 @@ $(function () {
         $('#tblParcelas').modal();
     })
 
+    $('#tipoSeguro').on('change', function () {
+        var elem = document.getElementById("tipoSeguro");
+        var strUser = elem.options[elem.selectedIndex].text;
+        var divHid = document.getElementById("divVeiculo");
+        if (strUser == "Veiculo") {
+            divHid.style.visibility = 'visible';
+        } else {
+            divHid.style.visibility = 'hidden';
+        }
+    });
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'hover'
+        });
+    });
+
     $('.esconderBotao').on('click', function () {
         var idV = document.getElementById('teste').getElementsByClassName('idEmail').innerText;
         // console.log(idV);
     })
 
-    // $('.btnNovo, #tblLista .btnEditar').on('show.bs.modal', function (event) {
     $('.btnNovoSeguro, #tblListaSeguro .btnEditarSeguro, .btnNotificacao').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
@@ -123,6 +119,7 @@ $(function () {
                 $('#teste #assunto').val(confirmar[1]);
                 $('#teste #texto').val(confirmar[2]);
                 $('#teste #id').val(confirmar[3]);
+                $('#teste #tipoE').val(confirmar[4]);
             });
             $('#mandarEmail').modal();
         } else if (nome === "new") {
@@ -159,7 +156,7 @@ $(function () {
         var padrao2 = "Prezado CLIENTE, a proximal  parcela de seu seguro de TIPO ira vencer em DATA"
         var titulo1 = "Vencimento Seguro"
         var titulo2 = "Vencimento Parcela Seguro"
-        console.log(document.getElementById('desfazer').getAttribute('value'));
+        // console.log(document.getElementById('desfazer').getAttribute('value'));
         if(document.getElementById('desfazer').getAttribute('value') == 1){
             document.getElementById('texto').value = padrao1;
             document.getElementById('titulo').value = titulo1;
@@ -169,40 +166,44 @@ $(function () {
         }
     })
 
+    var msgDia = "Data invalida!";
     $.validator.addMethod("dataValid", function (value, element) {
         var dataT = value.split('/');
         var hoje = new Date();
         hoje = hoje.getFullYear();
-        var msgDia = "Data invalida!"
+        msgDia = ""
         if (dataT[1] > 0 && dataT[1] < 13 && dataT[0] > 0 && dataT[2] == hoje) {
             if (dataT[1] == 04 || dataT[1] == 06 || dataT[1] == 9 || dataT[1] == 11) {
                 if (dataT[0] < 31) {
                     return true;
                 } else {
-                    msgDia;
+                    msgDia = "Mes de 30 dias";
                     return false;
                 }
             } else if (dataT[1] == 2) {
                 if (dataT[0] < 30) {
                     return true;
                 } else {
-                    msgDia;
+                    msgDia = "Mes de 28 dias";
                     return false;
                 }
             } else {
                 if (dataT[0] < 32 && dataT[1] != 2) {
                     return true;
                 } else {
-                    msgDia;
+                    msgDia = "Mes de 31 dias";
                     return false;
                 }
             }
         } else {
-            msgDia;
+            msgDia = "Data invalida!";
             return false;
         }
+
+
         return true
     }, msgDia);
+
 
     $(function () {
         $('#formNewEdit').validate({
@@ -215,13 +216,21 @@ $(function () {
                 dataSeg: {
                     dataValid: true,
                     required: true
+                    // date: true
                 }
             },
+
             submitHandler: function (form) {
+                // do other things for a valid form
                 form.submit();
             }
         });
+
     })
+
+
+
+
 })
 
 

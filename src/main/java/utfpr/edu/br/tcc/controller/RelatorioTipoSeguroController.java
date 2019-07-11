@@ -52,7 +52,7 @@ public class RelatorioTipoSeguroController {
     @GetMapping("/seguro")
     public void export(@RequestParam("tipoSeguro") String tipoSeguro, @RequestParam(value = "botao") String botao, HttpServletResponse response) throws IOException, JRException, SQLException {
         String ordem = "";
-        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatório de Seguros de "+tipoSeguro, tipoSeguro, "classpath:/reports/TipoSeguroReport.jrxml", ordem, ordem);
+        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatorio de Seguros de "+tipoSeguro, tipoSeguro, "classpath:/reports/TipoSeguroReport.jrxml", ordem, ordem);
         if (botao.equalsIgnoreCase("mostrar")){
             gerarRelatorio.imprimir(response, jasperPrint);
         }else if (botao.equalsIgnoreCase("baixar")){
@@ -66,7 +66,7 @@ public class RelatorioTipoSeguroController {
     @GetMapping("/email")
     public void email(@RequestParam("tipoSeguro") String tipoSeguro, @RequestParam("endereco") String endereco,
                               @RequestParam("assunto") String assunto, @RequestParam("texto") String texto, HttpServletResponse response) throws IOException, JRException, SQLException {
-        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatório de Seguros de "+tipoSeguro, tipoSeguro, "classpath:/reports/TipoSeguroReport.jrxml", "", "");
+        JasperPrint jasperPrint = seguroReportService.generatePromissoria(1L, "Relatorio de Seguros de "+tipoSeguro, tipoSeguro, "classpath:/reports/TipoSeguroReport.jrxml", "", "");
         gerarRelatorio.imprimir(response, jasperPrint);
         envioEmail.enviarArquivo(endereco, assunto, texto, gerarRelatorio.gerarPdf(jasperPrint), "RelatorioSeguro"+tipoSeguro+".pdf");
     }

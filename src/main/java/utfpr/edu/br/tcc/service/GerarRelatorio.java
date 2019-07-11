@@ -33,10 +33,12 @@ public class GerarRelatorio {
 
     public void imprimir(HttpServletResponse response, JasperPrint jasperPrint)
             throws IOException, JRException{
+
         response.setContentType("application/pdf");
         OutputStream out = response.getOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, out);
     }
+
 
     public void baixar(String nomeArquivo, HttpServletResponse response, JasperPrint jasperPrint)
             throws IOException, JRException {
@@ -50,8 +52,10 @@ public class GerarRelatorio {
 
     public byte[] gerarPdf(JasperPrint jasperPrint)
             throws JRException {
-        ByteArrayOutputStream outA = new ByteArrayOutputStream();
+
         JRPdfExporter exporter = new JRPdfExporter();
+        ByteArrayOutputStream outA = new ByteArrayOutputStream();
+
         exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
         exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outA);
         exporter.exportReport();
